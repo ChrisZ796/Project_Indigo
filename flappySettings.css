@@ -1,3 +1,4 @@
+
 .settings{
     display: grid;
     grid-template-columns: repeat(3,1fr);
@@ -8,6 +9,9 @@
         "pl de de";
     font-family: flappyBird;
     font-size: 50px;
+}
+span{    
+    font-family: flappyNumbers;
 }
 #planets{
     grid-area: pl;
@@ -27,10 +31,18 @@
     margin-top: 50px;
     margin-bottom: 50px;
 }
+
 @font-face {
 
     font-family: "flappyBird";
-
+    
     src: url("FlappybirdyRegular-KaBW.ttf");
+
+}
+@font-face {
+
+    font-family: "flappyNumbers";
+    
+    src: url("flappy-bird-font.ttf");
 
 }
