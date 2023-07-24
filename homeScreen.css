@@ -3,6 +3,7 @@ h2{
     text-align: center;
     padding: 10px;
     font-size: 7vh;
+    cursor: grab;
 }
 h1{
     text-align: center;
@@ -21,4 +22,10 @@ body{
 @font-face {
     font-family: "classicText";
     src: url("FlappybirdyRegular-KaBW.ttf");
+}
+#Credits{
+    text-align: center;
+}
+#backButton{
+    visibility:hidden;
 }
