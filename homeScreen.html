@@ -7,12 +7,20 @@
     <link rel="stylesheet" href="homeScreen.css">
 </head>
 <body>
-    <div id = "Options">
+    <div id="mainContainer">
         <h1 id="header">Flappy Bird</h1>
         <h2 id="start">START</h2>
         <h2 id="stats">STATISTICS</h2>
         <h2 id="credits">CREDITS</h2>
         <h2 id="settings">SETTINGS</h2>
+    </div>
+<!-- Below is Stat screen =========================================================== -->
+    <div id="statContainer">   
+        <h1 id="statHeader">STATS</h1>
+        <p class="stat">Longest Distance: <span id="distance" class="statSpan"></span></p>
+        <p class="stat">Coins Collected: <span id="coins" class="statSpan"></span></p>
+        <p class="stat">Total Attempts: <span id="attempts" class="statSpan"></span></p>
+        <button id="return">Main Menu</button>
     </div>
     <div id = "Credits"></div>
     <script src = "gameScript.js"></script>
