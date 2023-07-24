@@ -36,8 +36,8 @@ function backToMain()
 {
     document.getElementById("mainContainer").style.display = "block";
     document.getElementById("statContainer").style.display = "none";
+    document.getElementById("creditsImg").remove();
 }
-=======
   /*
     document.getElementById("header").style.display = "none";
     document.getElementById("start").style.display = "none";
@@ -45,7 +45,7 @@ function backToMain()
     document.getElementById("credits").style.display = "none";
     document.getElementById("settings").style.display = "none";
 */
-}
+
 
 function showCredits()
 {
@@ -54,21 +54,13 @@ function showCredits()
     creditsPage.alt = "credit screen image";
     creditsPage.style.position = "relative";
     creditsPage.style.width = "20vw";
-    creditsPage.id = "creditsImg"
+    creditsPage.style.width = "20vmin";
+    creditsPage.id = "creditsImg";
     document.getElementById("Credits").appendChild(creditsPage);
 
-    creditsPage.addEventListener("click", showElements, false);
+    creditsPage.addEventListener("click", backToMain, false);
 }
 
-function showElements()
-{
-    document.getElementById("header").style.display = "block";
-    document.getElementById("start").style.display = "block";
-    document.getElementById("stats").style.display = "block";
-    document.getElementById("credits").style.display = "block";
-    document.getElementById("settings").style.display = "block";
-    document.getElementById("creditsImg").remove();
-}
 
 
 
