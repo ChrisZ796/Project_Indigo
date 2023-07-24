@@ -2,6 +2,16 @@
     margin: auto;
     display: block;
 }
-button{
-    display: block;
+h2{
+    font-family: sans-serif;
+    text-align: center;
+    padding: 10px;
+}
+h1{
+    text-align: center;
+    font-family: sans-serif;
+    padding: 100px;
+}
+a{
+    text-decoration: none;
 }
