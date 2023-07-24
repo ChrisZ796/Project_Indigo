@@ -3,6 +3,7 @@ h2{
     text-align: center;
     padding: 10px;
     font-size: 7vh;
+    cursor: pointer;
 }
 h1{
     text-align: center;
@@ -21,4 +22,52 @@ body{
 @font-face {
     font-family: "classicText";
     src: url("FlappybirdyRegular-KaBW.ttf");
+}
+
+/* BELOW IS FOR STAT PAGE */
+/* ========================================================================================= */
+/* ========================================================================================= */
+/* ========================================================================================= */
+/* ========================================================================================= */
+/* ========================================================================================= */
+
+
+@font-face {
+    font-family: "flappyNumbers";
+    src: url("flappy-bird-font.ttf");
+}
+#statContainer{
+    width: 100vw;
+    height: 100vh;
+    font-family: "classicText";
+    display: none
+}
+.stat{
+    display: block;
+    font-size: 100px;
+    margin: 1vh;
+}
+#statHeader {
+    font-size: 200px;
+    display: block;
+    text-align: center;
+    margin: 0px;
+}
+.statSpan{
+    font-family: "flappyNumbers";
+    font-size: 50px;
+}
+#return{
+    background-color: orange;
+    color: white;
+    font-size: 100px;
+    align-content: center;
+    text-align: center;
+    outline-color: white;
+    padding-bottom: 0px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    font-family: "classicText";
 }
