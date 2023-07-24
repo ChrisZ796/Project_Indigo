@@ -93,3 +93,8 @@ span{
     margin-bottom: 50px;
     cursor: pointer;
 }
+#heading{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight:bold;
+    margin: auto;
+}
