@@ -1,0 +1,10 @@
+let total = 0
+let attempts = 0
+let coins = 0
+let pipes = 0
+let distance = 0
+document.getElementById("distance").textContent = distance
+document.getElementById("attempts").textContent = attempts
+document.getElementById("coins").textContent = coins
+document.getElementById("totalDistance").textContent = total
+document.getElementById("pipes").textContent = pipes
