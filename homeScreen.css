@@ -3,7 +3,7 @@ h2{
     text-align: center;
     padding: 10px;
     font-size: 7vh;
-    cursor: pointer;
+    cursor: grab;
 }
 h1{
     text-align: center;
@@ -70,4 +70,6 @@ body{
     padding-right: 10px;
     cursor: pointer;
     font-family: "classicText";
+#Credits{
+    text-align: center;
 }
