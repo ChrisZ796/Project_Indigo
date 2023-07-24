@@ -1,0 +1,36 @@
+.settings{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-areas: 
+        "ti ti ti"
+        "pl de de"
+        "pl de de"
+        "pl de de";
+    font-family: flappyBird;
+    font-size: 50px;
+}
+#planets{
+    grid-area: pl;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: auto;
+}
+#description{
+    grid-area: de;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+#title{
+    grid-area: ti;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+@font-face {
+
+    font-family: "flappyBird";
+
+    src: url("FlappybirdyRegular-KaBW.ttf");
+
+}
