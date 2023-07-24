@@ -5,6 +5,11 @@ h2{
     font-size: 7vh;
     cursor: pointer;
 }
+
+#start{
+    text-decoration: none;
+}
+
 p{
     font-family: "classicText";
     padding: 10px;
