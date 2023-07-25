@@ -5,6 +5,11 @@ h2{
     font-size: 7vh;
     cursor: pointer;
 }
+
+#start{
+    text-decoration: none;
+}
+
 p{
     font-family: "classicText";
     padding: 10px;
@@ -87,4 +92,16 @@ span{
     margin-top: 50px;
     margin-bottom: 50px;
     cursor: pointer;
+}
+#heading{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight:bold;
+    margin: auto;
+    width: 50vmin;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#button{
+    
 }
