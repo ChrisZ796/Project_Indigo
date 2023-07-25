@@ -4,11 +4,11 @@ canvas.height = window.innerHeight;
 let ctx = canvas.getContext("2d");
 document.addEventListener("keydown",jump,false);
 let isGameOver = false;
-let gravity = 0;
+let velocity = 0;
 let raf;
 let text = document.getElementById("text");
-
-
+let gravity = 0.1;
+let gameIsRunning = false;
 let birdImage = new Image();
 birdImage.src = "icon.png";
 
@@ -17,6 +17,7 @@ class Bird{
     constructor(x,y,width,height){
         this.x = x;
         this.y = y;
+        this.dy = 0;
         this.width = width;
         this.height = height;
 
@@ -30,49 +31,57 @@ class Bird{
 let bird = new Bird(10,300,80,80);
 bird.draw();
 
+gameLoop();
+
 function jump(event){
+    gameIsRunning = true;
     ctx.clearRect(0,0,canvas.width,canvas.height);
     let key = event.key;
     if (key == "ArrowUp"){
-        bird.y -= 30;
-        if (gravity == 0){
-            gravity = 2;
-            text.style.display = "none";
-            gameLoop();
-        }
+        birdDrop();
+        text.style.display = "none";
     }
     if (key == "ArrowRight"){
         bird.x += 100;
     }
-
 }
 
 
 
 function gameLoop(){
-    if (!isGameOver){
-        
+    if (!isGameOver && gameIsRunning){
+        // console.log(bird.y);
+        // console.log("1");
         ctx.clearRect(0,0,canvas.width,canvas.height);
-        bird.x += 2;
-        birdDrop();
+        bird.x = bird.x + 2;
+        bird.x = bird.x % canvas.width;
+        //The effect of gravity
+        bird.dy = bird.dy + gravity;
         //The bottom property sets or returns the bottom position of a positioned element.
         //bird.y += "px"; 
+        bird.y = bird.y + bird.dy;
         bird.draw();
-        if (bird.x >= canvas.width + 5){
-            bird.x %= canvas.width;
-        }
-        raf = requestAnimationFrame(gameLoop);
+
+        
+        
     }
-    if (bird.y <= 0){
+    if (bird.y >= canvas.height){
         isGameOver = true;
         window.cancelAnimationFrame(raf);
-        
-        isGameOver = false;
     }
+    raf = window.requestAnimationFrame(gameLoop);
 }
 
 function birdDrop(){
-    bird.y += gravity;
+    // let finalVelocity = velocity + gravity;
+    // if(isFlying){
+    //     console.log(finalVelocity);
+    //     bird.y -= finalVelocity;
+    // }else{
+    //     bird.y += finalVelocity;
+    // }
+    bird.dy = bird.dy - 2;
+    
 }
 
 
