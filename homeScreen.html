@@ -20,9 +20,39 @@
         <p class="stat">Longest Distance: <span id="distance" class="statSpan"></span></p>
         <p class="stat">Coins Collected: <span id="coins" class="statSpan"></span></p>
         <p class="stat">Total Attempts: <span id="attempts" class="statSpan"></span></p>
-        <button id="return">Main Menu</button>
     </div>
-    <div id = "Credits"></div>
+<!-- Below is Credits screen  =====================================================   -->
+    <div id = "Credits">
+        <h1 id = "creditsHeader">CREDITS</h1>
+        <p class = "contributor">Christopher Zhang</p>
+        <p class="contributor">Cindy Zheng</p>
+        <p class = "contributor">Hao Ran Gou</p>
+        <p class = "contributor">Jarron Deng</p>
+        <p class = "contributor">Zak Kingsley</p>
+    </div>
+<!-- Below is Settings screen =====================================================   -->
+    <div id="settingsBar">
+        <h1 id="settingTitle">Settings</h1>
+        <div id="planets">
+            <h2 id="earth">Earth</h2>
+            <h2 id="mars">Mars</h2>
+        </div>
+        <div id="description">
+            <!-- speed the bird fall -->
+            <p>gravity: <span id="gravity"></span></p>     
+            <!-- height of one jump -->
+            <p>oxygen: <span id="oxygen"></span></p>
+            <!-- speed of the pillars(or the bird if you want to say it this way) -->
+            <p>wind speed: <span id="wind"></span></p>
+            <!-- amount of pillars and obsticles -->
+            <p>complexity of terrain: <span id="complexity"></span></p>
+            <!-- size of the bird -->
+            <p>atmosphere pressure: <span id="pressure"></span></p>
+            <!-- size of one gap -->
+            <p>gap of pillars: <span id="gap"></span></p>
+        </div>
+        
+    </div>
     <script src = "gameScript.js"></script>
 </body>
 </html>

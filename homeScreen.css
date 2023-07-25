@@ -3,16 +3,19 @@ h2{
     text-align: center;
     padding: 10px;
     font-size: 7vh;
-    cursor: grab;
+    cursor: pointer;
+}
+p{
+    font-family: "classicText";
+    padding: 10px;
+    font-size: 6vh;
 }
 h1{
     text-align: center;
     font-family: "classicText";
     padding: 20px;
     font-size: 9vh;
-}
-a{
-    text-decoration: none;
+    cursor: pointer;
 }
 body{
     background-image: url("earthBackdrop.jpg");
@@ -40,37 +43,48 @@ body{
     width: 100vw;
     height: 100vh;
     font-family: "classicText";
-    display: none
-}
-.stat{
-    display: block;
-    font-size: 100px;
-    margin: 1vh;
-}
-#statHeader {
-    font-size: 200px;
-    display: block;
+    display: none;
     text-align: center;
-    margin: 0px;
 }
 .statSpan{
     font-family: "flappyNumbers";
     font-size: 50px;
 }
-#return{
-    background-color: orange;
-    color: white;
-    font-size: 100px;
-    align-content: center;
-    text-align: center;
-    outline-color: white;
-    padding-bottom: 0px;
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    cursor: pointer;
-    font-family: "classicText";
-}
 #Credits{
     text-align: center;
+    display: none;
+}
+#settingsBar{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-areas: 
+        "ti ti ti"
+        "pl de de"
+        "pl de de"
+        "pl de de";
+    font-family: classicText;
+    font-size: 50px;
+    display: none;
+}
+span{    
+    font-family: flappyNumbers;
+}
+#planets{
+    grid-area: pl;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: auto;
+}
+#description{
+    grid-area: de;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+#settingTitle{
+    grid-area: ti;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    cursor: pointer;
 }

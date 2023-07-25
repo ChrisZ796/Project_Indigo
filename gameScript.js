@@ -1,3 +1,4 @@
+// declaring and initializing variable for stat
 let startButton = document.getElementById("start");
 let statPage = document.getElementById("stats");
 let distance = 0;
@@ -11,56 +12,57 @@ let attemptsStat = document.getElementById("attempts")
 distanceStat.textContent = distance;
 coinsStat.textContent = coins;
 attemptsStat.textContent = attempts;
-
+// event listener for the start button to go to the game mode
 startButton.addEventListener("click", hideElements, false);
 statPage.addEventListener("click", openStats, false);
-
-document.getElementById("return").addEventListener("click", backToMain, false);
-
+// event listener for the stat page to go back to main
+document.getElementById("statHeader").addEventListener("click", backToMain, false);
+// event listener for going to the credit page
 let creditsButton = document.getElementById("credits");
 
 creditsButton.addEventListener("click", hideElements, false);
 creditsButton.addEventListener("click", showCredits, false);
 
+// event listener for going to the setting page or heading back from the setting page.
+document.getElementById("settings").addEventListener("click", openSettings, false);
+
+document.getElementById("settingTitle").addEventListener("click", backToMain, false);
+
+// this hide the elements on the page
 function hideElements()
 {
     document.getElementById("mainContainer").style.display = "none";
 }
+
+// show the page of stats
 function openStats()
 {
     document.getElementById("mainContainer").style.display = "none";
     document.getElementById("statContainer").style.display = "block";
 }
 
+// head back to main from different pages
 function backToMain()
 {
     document.getElementById("mainContainer").style.display = "block";
     document.getElementById("statContainer").style.display = "none";
-    document.getElementById("creditsImg").remove();
+    document.getElementById("settingsBar").style.display = "none";
+    document.getElementById("Credits").style.display = "none";
 }
-  /*
-    document.getElementById("header").style.display = "none";
-    document.getElementById("start").style.display = "none";
-    document.getElementById("stats").style.display = "none";
-    document.getElementById("credits").style.display = "none";
-    document.getElementById("settings").style.display = "none";
-*/
 
-
+// show the credit page
 function showCredits()
 {
-    let creditsPage = document.createElement("img");
-    creditsPage.src = "creditsScreen.png";
-    creditsPage.alt = "credit screen image";
-    creditsPage.style.position = "relative";
-    creditsPage.style.width = "20vw";
-    creditsPage.style.width = "20vmin";
-    creditsPage.id = "creditsImg";
-    document.getElementById("Credits").appendChild(creditsPage);
-
-    creditsPage.addEventListener("click", backToMain, false);
+    let creditsPage = document.getElementById("Credits");
+    creditsPage.style.display = "block";
+    document.getElementById("creditsHeader").addEventListener("click", backToMain, false);
 }
 
-
+// show the setting page
+function openSettings()
+{
+    document.getElementById("settingsBar").style.display = "grid";
+    hideElements();
+}
 
 
