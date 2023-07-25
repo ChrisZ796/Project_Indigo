@@ -1,4 +1,6 @@
 let canvas = document.getElementById("canvas");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 let ctx = canvas.getContext("2d");
 document.addEventListener("keydown",jump,false);
 let isGameOver = false;
@@ -7,7 +9,7 @@ let raf;
 
 
 let birdImage = new Image();
-birdImage.src = "icon.jpg";
+birdImage.src = "icon.png";
 
 
 class Bird{
@@ -24,7 +26,7 @@ class Bird{
     }
 }
 
-let bird = new Bird(10,300,50,50);
+let bird = new Bird(10,300,80,80);
 bird.draw();
 
 function jump(event){
@@ -50,9 +52,9 @@ function gameLoop(){
         
         ctx.clearRect(0,0,canvas.width,canvas.height);
         bird.x += 2;
-        birdDrop();
-        //The bottom property sets or returns the bottom position of a positioned element.
-        //bird.y += "px"; 
+        //gravity 
+        birdDrop(); 
+        //reset the bird position
         bird.draw();
         if (bird.x >= canvas.width + 5){
             bird.x %= canvas.width;
