@@ -1,6 +1,7 @@
 // declaring and initializing variable for stat
 let startButton = document.getElementById("start");
 let statPage = document.getElementById("stats");
+let currentTrack = new Audio("Castlevania-VampireKiller.ogg");
 let distance = 0;
 let coins = 0;
 let attempts = 0;
@@ -77,3 +78,7 @@ function dropInElementbyID(elementID) {
         }
     }
 }
+
+function playAudio(url) {
+    new Audio(url).play();
+  }
