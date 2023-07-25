@@ -1,33 +1,14 @@
-@font-face{
-    font-family: "myFirstFont";
-    src: url("FlappybirdyRegular-KaBW.ttf");
-}
-
 #header{
     margin: auto;
-    display: inline-block;
-    width: 50vw;
-    text-align: center;
-    margin-top:20px;
-    font-family: "myFirstFont";
-    font-size: 150px;
 }
-h2{
-    font-family: sans-serif;
-    text-align: center;
-    padding: 10px;
+#description{
+    grid-area: de;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
-h1{
-    text-align: center;
-    font-family: sans-serif;
-    padding: 100px;
-}
-a{
-    text-decoration: none;
-}
-body{
-    background-image: url("earthBackdrop.jpg");
-    background-repeat: no-repeat;
-    background-size: 200vh;
-    position:relative;
+#title{
+    grid-area: ti;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
