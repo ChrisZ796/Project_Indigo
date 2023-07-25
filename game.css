@@ -1,13 +1,16 @@
 #flex{
     display: flex;
     gap: 10px;
-    width: 50%;
+    width: 100%;
     margin: auto;
 }
 
-body{
+#canvas{
     background-image: url("earthBackdrop.jpg");
     margin: 0;
     padding: 0;
+    width: 80vw;
+    height: 90vh;
     overflow: hidden;
+    margin: auto;
 }

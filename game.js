@@ -1,4 +1,6 @@
 let canvas = document.getElementById("canvas");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 let ctx = canvas.getContext("2d");
 document.addEventListener("keydown",jump,false);
 let isGameOver = false;
@@ -7,7 +9,7 @@ let raf;
 
 
 let birdImage = new Image();
-birdImage.src = "icon.jpg";
+birdImage.src = "icon.png";
 
 
 class Bird{
@@ -24,14 +26,14 @@ class Bird{
     }
 }
 
-let bird = new Bird(10,300,50,50);
+let bird = new Bird(10,300,80,80);
 bird.draw();
 
 function jump(event){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     let key = event.key;
     if (key == "ArrowUp"){
-        bird.y -= 25;
+        bird.y -= 30;
         if (gravity == 0){
             gravity = 2;
             gameLoop();

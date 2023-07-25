@@ -1,4 +1,79 @@
-#header{
+h2{
+    font-family: "classicText";
+    text-align: center;
+    padding: 10px;
+    font-size: 7vh;
+    cursor: pointer;
+}
+p{
+    font-family: "classicText";
+    padding: 10px;
+    font-size: 6vh;
+}
+h1{
+    text-align: center;
+    font-family: "classicText";
+    padding: 20px;
+    font-size: 9vh;
+    cursor: pointer;
+}
+body{
+    background-image: url("earthBackdrop.jpg");
+    background-repeat: no-repeat;
+    background-size: 200vh;
+}
+@font-face {
+    font-family: "classicText";
+    src: url("FlappybirdyRegular-KaBW.ttf");
+}
+
+/* BELOW IS FOR STAT PAGE */
+/* ========================================================================================= */
+/* ========================================================================================= */
+/* ========================================================================================= */
+/* ========================================================================================= */
+/* ========================================================================================= */
+
+
+@font-face {
+    font-family: "flappyNumbers";
+    src: url("flappy-bird-font.ttf");
+}
+#statContainer{
+    width: 100vw;
+    height: 100vh;
+    font-family: "classicText";
+    display: none;
+    text-align: center;
+}
+.statSpan{
+    font-family: "flappyNumbers";
+    font-size: 50px;
+}
+#Credits{
+    text-align: center;
+    display: none;
+}
+#settingsBar{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-areas: 
+        "ti ti ti"
+        "pl de de"
+        "pl de de"
+        "pl de de";
+    font-family: classicText;
+    font-size: 50px;
+    display: none;
+}
+span{    
+    font-family: flappyNumbers;
+}
+#planets{
+    grid-area: pl;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     margin: auto;
 }
 #description{
@@ -6,9 +81,10 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
-#title{
+#settingTitle{
     grid-area: ti;
     margin: auto;
     margin-top: 50px;
     margin-bottom: 50px;
+    cursor: pointer;
 }
