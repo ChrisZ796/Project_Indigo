@@ -1,0 +1,13 @@
+#flex{
+    display: flex;
+    gap: 10px;
+    width: 50%;
+    margin: auto;
+}
+
+body{
+    background-image: url("earthBackdrop.jpg");
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}

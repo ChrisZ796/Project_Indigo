@@ -1,12 +1,33 @@
-#heading{
-    font-family: 'Courier New', Courier, monospace;
-    font-weight:bold;
-    margin: auto;
-    width: 50vmin;
-    display: flex;
-    flex-wrap: wrap;
+@font-face{
+    font-family: "myFirstFont";
+    src: url("FlappybirdyRegular-KaBW.ttf");
 }
 
-#button{
-    
+#header{
+    margin: auto;
+    display: inline-block;
+    width: 50vw;
+    text-align: center;
+    margin-top:20px;
+    font-family: "myFirstFont";
+    font-size: 150px;
+}
+h2{
+    font-family: sans-serif;
+    text-align: center;
+    padding: 10px;
+}
+h1{
+    text-align: center;
+    font-family: sans-serif;
+    padding: 100px;
+}
+a{
+    text-decoration: none;
+}
+body{
+    background-image: url("earthBackdrop.jpg");
+    background-repeat: no-repeat;
+    background-size: 200vh;
+    position:relative;
 }
