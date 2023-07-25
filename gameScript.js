@@ -1,6 +1,7 @@
 // declaring and initializing variable for stat
 let startButton = document.getElementById("start");
 let statPage = document.getElementById("stats");
+let currentTrack = new Audio("Castlevania-VampireKiller.ogg");
 let distance = 0;
 let coins = 0;
 let attempts = 0;
@@ -29,11 +30,13 @@ document.getElementById("settingTitle").addEventListener("click", backToMain, fa
 // this hide the elements on the page
 function hideElements()
 {
+    raiseUpElementbyID("mainContainer");
     document.getElementById("mainContainer").style.display = "none";
 }
 // show the page of stats
 function openStats()
-{
+{  
+    raiseUpElementbyID("mainContainer");
     document.getElementById("mainContainer").style.display = "none";
     document.getElementById("statContainer").style.display = "block";
     dropInElementbyID("statContainer");
@@ -41,10 +44,14 @@ function openStats()
 // head back to main from different pages
 function backToMain()
 {
+    raiseUpElementbyID("statContainer");
+    raiseUpElementbyID("settingsBar");
+    raiseUpElementbyID("Credits");
     document.getElementById("mainContainer").style.display = "block";
     document.getElementById("statContainer").style.display = "none";
     document.getElementById("settingsBar").style.display = "none";
     document.getElementById("Credits").style.display = "none";
+    dropInElementbyID("mainContainer");
 }
 // show the credit page
 function showCredits()
@@ -77,3 +84,24 @@ function dropInElementbyID(elementID) {
         }
     }
 }
+function raiseUpElementbyID(elementID) {
+    let element = document.getElementById(elementID);
+    element.style.position = "relative";
+    let pos = 0;
+    let movement = setInterval(moveUp, 3);
+    function moveUp() {
+        if (pos > 1000)
+        {
+            clearInterval(movement);
+        }
+        else
+        {
+            pos += 10;
+            element.style.bottom = pos + "px";
+        }
+    }
+}
+
+function playAudio(url) {
+    new Audio(url).play();
+  }
