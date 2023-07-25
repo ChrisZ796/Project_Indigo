@@ -6,6 +6,7 @@ document.addEventListener("keydown",jump,false);
 let isGameOver = false;
 let gravity = 0;
 let raf;
+let text = document.getElementById("text");
 
 
 let birdImage = new Image();
@@ -36,6 +37,7 @@ function jump(event){
         bird.y -= 30;
         if (gravity == 0){
             gravity = 2;
+            text.style.display = "none";
             gameLoop();
         }
     }
