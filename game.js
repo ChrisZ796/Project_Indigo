@@ -89,6 +89,9 @@ bird.draw();
 let firstPipeGoingUp = new PipeUp(Math.random() * 1000 + 100, Math.random() * 800 + 100, 100, 800);
 let firstPipeGoingDown = new PipeDown(firstPipeGoingUp.x, firstPipeGoingUp.y - 1100, 100, 800);
 
+let secondPipeGoingUp = new PipeUp(Math.random() * 1000 + 100, Math.random() * 800 + 100, 100, 800);
+let secondPipeGoingDown = new PipeDown(secondPipeGoingUp.x, secondPipeGoingUp.y - 1100, 100, 800);
+
 let foreground = new Foreground(0, 930, 2000, 100);
 foreground.draw();
 
@@ -121,17 +124,23 @@ function gameLoop(){
         bird.draw();
         firstPipeGoingUp.draw();
         firstPipeGoingDown.draw();
+        secondPipeGoingUp.draw();
+        secondPipeGoingDown.draw();
         foreground.draw();
         if (bird.x >= canvas.width + 5){
             bird.x %= canvas.width;
-            firstPipeGoingUp.x = Math.random() * 1000 + 100;
+            firstPipeGoingUp.x = Math.random() * 1000 + 500;
             firstPipeGoingUp.y = Math.random() * 800 + 100;
             firstPipeGoingDown.x = firstPipeGoingUp.x;
             firstPipeGoingDown.y = firstPipeGoingUp.y - 1100;
+            secondPipeGoingUp.x = Math.random() * 1000 + 500;
+            secondPipeGoingUp.y = Math.random() * 800 + 100;
+            secondPipeGoingDown.x = secondPipeGoingUp.x;
+            secondPipeGoingDown.y = secondPipeGoingUp.y - 1100;
         }
         raf = requestAnimationFrame(gameLoop);
     }
-    if (bird.y <= 0){
+    if (bird.y >= 870) {
         isGameOver = true;
         window.cancelAnimationFrame(raf);
         
