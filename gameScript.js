@@ -25,7 +25,7 @@ creditsButton.addEventListener("click", showCredits, false);
 // event listener for going to the setting page or heading back from the setting page.
 document.getElementById("settings").addEventListener("click", openSettings, false);
 
-document.getElementById("title").addEventListener("click", hideSettings, false);
+document.getElementById("settingTitle").addEventListener("click", backToMain, false);
 // this hide the elements on the page
 function hideElements()
 {
@@ -43,6 +43,7 @@ function backToMain()
 {
     document.getElementById("mainContainer").style.display = "block";
     document.getElementById("statContainer").style.display = "none";
+    document.getElementById("settingsBar").style.display = "none";
     document.getElementById("Credits").style.display = "none";
 }
 // show the credit page
@@ -59,12 +60,6 @@ function openSettings()
     document.getElementById("settingsBar").style.display = "grid";
     dropInElementbyID("settingsBar");
     hideElements();
-}
-// show the setting page
-function hideSettings()
-{
-    document.getElementById("settingsBar").style.display = "none";
-    backToMain();
 }
 
 function dropInElementbyID(elementID) {

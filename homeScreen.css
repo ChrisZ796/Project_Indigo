@@ -3,7 +3,7 @@ h2{
     text-align: center;
     padding: 10px;
     font-size: 7vh;
-    cursor: grab;
+    cursor: pointer;
 }
 p{
     font-family: "classicText";
@@ -15,6 +15,7 @@ h1{
     font-family: "classicText";
     padding: 20px;
     font-size: 9vh;
+    cursor: pointer;
 }
 body{
     background-image: url("earthBackdrop.jpg");
@@ -80,9 +81,10 @@ span{
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
-#title{
+#settingTitle{
     grid-area: ti;
     margin: auto;
     margin-top: 50px;
     margin-bottom: 50px;
+    cursor: pointer;
 }
