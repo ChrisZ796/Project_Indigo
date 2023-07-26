@@ -1,23 +1,31 @@
-#flex{
+#container {
     display: flex;
     gap: 10px;
-    width: 100%;
-    margin: auto;
-}
+    width:100%;
+    position:relative;
+    margin:auto;
+    width:80vw;
+    height:90vh;
 
+}
 #canvas{
     background-image: url("earthBackdrop.jpg");
-    margin: 0;
     padding: 0;
-    width: 80vw;
-    height: 90vh;
     overflow: hidden;
-    margin: auto;
 }
-
+h2 {
+    position: absolute;
+    top: 0px;
+    left: 40px;
+}
 @font-face {
     font-family: "classicText";
     src: url("FlappybirdyRegular-KaBW.ttf");
+}
+
+@font-face {
+    font-family: "flappyNumbers";
+    src: url("flappy-bird-font.ttf");
 }
 
 #text{
@@ -44,6 +52,21 @@
     border-radius: 15%;
     cursor: pointer;
     background-color: skyblue;
+}
+
+.statSpan{
+    font-family: "flappyNumbers";
+    font-size: 50px;
+}
+
+span{    
+    font-family: flappyNumbers;
+}
+
+h2{
+    font-family: "classicText";
+    padding: 10px;
+    font-size: 200%;
 }
 
 body{

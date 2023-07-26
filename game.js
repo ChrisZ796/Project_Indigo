@@ -12,6 +12,9 @@ let text = document.getElementById("text");
 //New Bird Mechanics
 let velocity = 0;
 let gameIsRunning = false;
+let scoreElement = document.getElementById("score");
+let score = 0;
+scoreElement.textContent = score;
 
 class Bird {
     constructor(x, y, width, height) {
@@ -99,6 +102,8 @@ function jump(event){
         bird.reset();
         resetPipe();
         foreground.draw();
+        score = 0;
+        scoreElement.textContent = 0;
         endgame.style.display =  "none";
         text.style.display = "block";
 
@@ -123,8 +128,15 @@ function resetPipe(){
 function gameLoop() {
     if (!isGameOver && gameIsRunning) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        bird.x += 2;
-
+        if (score <= 5){
+            bird.x += 2;
+        }
+        else if (score <= 10){
+            bird.x += 3;
+        }
+        else{
+            bird.x += 3;
+        }
         // Calculate rotation angle based on bird's velocity
         //bird.rotation = Math.atan2(bird.dy, 2) + Math.PI / 2;
         //bird.x = bird.x % canvas.width;
@@ -151,6 +163,8 @@ function gameLoop() {
             secondPipeGoingUp.y = Math.random() * 800 + 100;
             secondPipeGoingDown.x = secondPipeGoingUp.x;
             secondPipeGoingDown.y = secondPipeGoingUp.y - 1100;
+            score++;
+            scoreElement.textContent = score;
         }
     }
     if (bird.y >= 640 || inDanger()) {
@@ -206,11 +220,11 @@ foregroundPicture.src = "foreground.jpg";
 let bird = new Bird(10,300,80,80);
 bird.draw();
 
-let firstPipeGoingUp = new PipeUp(Math.random() * 1000 + 500, Math.random() * 800 + 100, 100, 800);
-let firstPipeGoingDown = new PipeDown(firstPipeGoingUp.x, firstPipeGoingUp.y - 1100, 100, 800);
+let firstPipeGoingUp = new PipeUp(Math.random() * 1000 + 500, Math.random() * 800 + 100, 100, 820);
+let firstPipeGoingDown = new PipeDown(firstPipeGoingUp.x, firstPipeGoingUp.y - 1100, 100, 820);
 
-let secondPipeGoingUp = new PipeUp(Math.random() * 1000 + 700, Math.random() * 800 + 100, 100, 800);
-let secondPipeGoingDown = new PipeDown(secondPipeGoingUp.x, secondPipeGoingUp.y - 1100, 100, 800);
+let secondPipeGoingUp = new PipeUp(Math.random() * 1000 + 700, Math.random() * 800 + 100, 100, 820);
+let secondPipeGoingDown = new PipeDown(secondPipeGoingUp.x, secondPipeGoingUp.y - 1100, 100, 820);
 
 let foreground = new Foreground(0, 700, 2000, 100);
 foreground.draw();

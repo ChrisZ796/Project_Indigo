@@ -6,6 +6,8 @@ let distance = 0;
 let coins = 0;
 let attempts = 0;
 
+
+
 let distanceStat = document.getElementById("distance")
 let coinsStat = document.getElementById("coins")
 let attemptsStat = document.getElementById("attempts")
