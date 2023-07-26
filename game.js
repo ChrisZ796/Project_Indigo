@@ -99,22 +99,13 @@ function gameLoop(){
         bird.dy = bird.dy + gravity;
         bird.y = bird.y + bird.dy;
         bird.draw();
-        firstPipeGoingUp.draw();
-        firstPipeGoingDown.draw();
-        secondPipeGoingUp.draw();
-        secondPipeGoingDown.draw();
+        for(let i=0;i<complexity;++i){
+            pipesGoingUp[i].draw();
+            pipesGoingDown[i].draw();
+        }
         foreground.draw();
-        if (bird.x >= canvas.width)
-        {
-            bird.x = 0;
-            firstPipeGoingUp.x = Math.random() * 1000 + 500;
-            firstPipeGoingUp.y = Math.random() * 800 + 100;
-            firstPipeGoingDown.x = firstPipeGoingUp.x;
-            firstPipeGoingDown.y = firstPipeGoingUp.y - 1100;
-            secondPipeGoingUp.x = Math.random() * 1000 + 500;
-            secondPipeGoingUp.y = Math.random() * 800 + 100;
-            secondPipeGoingDown.x = secondPipeGoingUp.x;
-            secondPipeGoingDown.y = secondPipeGoingUp.y - 1100;
+        if (bird.x >= canvas.width){
+            createPipe(complexity);
         }
     }
     if (bird.y >= 870 || inDanger()) {
@@ -130,25 +121,28 @@ function birdDrop(){
 
 function inDanger()
 {
-    //Check the first set of pipes
-    if(bird.x > firstPipeGoingUp.x - 50 && bird.x < firstPipeGoingUp.x + 100)
-    {
-        if(bird.y > firstPipeGoingUp.y - 50 || bird.y < firstPipeGoingDown.y + 800)
+    //Check the sets of pipes
+    for(let i=0;i<complexity;++i){
+        if(bird.x > pipesGoingUp[i].x - 50 && bird.x < pipesGoingUp[i].x + 100)
         {
-            return true;
+            if(bird.y > pipesGoingUp[i].y - 50 || bird.y < pipesGoingDown[i].y + 800)
+            {
+                return true;
+            }
+        }
+        else{
+            return false;
         }
     }
-    //Check the second set of pipes
-    else if(bird.x > secondPipeGoingUp.x - 50 && bird.x < secondPipeGoingUp.x + 100)
-    {
-        if(bird.y > secondPipeGoingUp.y - 50 || bird.y < secondPipeGoingDown.y + 800)
-        {
-            return true;
-        }
-    }
-    else
-    {
-        return false;
+
+}
+
+function createPipe(pipeNum){
+    for(let i=0; i<pipeNum;++i){
+        PipeGoingUp = new PipeUp(Math.random() * 1000 + 100, Math.random() * 800 + 100, 100, 800);
+        PipeGoingDown = new PipeDown(PipeGoingUp.x, PipeGoingUp.y - 1100, 100, 800);
+        pipesGoingUp.push(PipeGoingUp);
+        pipesGoingDown.push(PipeGoingDown);
     }
 }
 
@@ -166,16 +160,17 @@ foregroundPicture.src = "foreground.jpg";
 
 let bird = new Bird(10,300,80,80);
 bird.draw();
-
-let firstPipeGoingUp = new PipeUp(Math.random() * 1000 + 100, Math.random() * 800 + 100, 100, 800);
-let firstPipeGoingDown = new PipeDown(firstPipeGoingUp.x, firstPipeGoingUp.y - 1100, 100, 800);
-
-let secondPipeGoingUp = new PipeUp(Math.random() * 1000 + 100, Math.random() * 800 + 100, 100, 800);
-let secondPipeGoingDown = new PipeDown(secondPipeGoingUp.x, secondPipeGoingUp.y - 1100, 100, 800);
+let PipeGoingUp;
+let PipeGoingDown;
+let pipesGoingUp=[];
+let pipesGoingDown=[];
 
 let foreground = new Foreground(0, 930, 2000, 100);
 foreground.draw();
 
+
+let complexity=2;
+createPipe(complexity);
 gameLoop();
 
 
