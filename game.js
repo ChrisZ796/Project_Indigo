@@ -20,6 +20,12 @@ class Bird{
         this.height = height;
 
     }
+    rotate(degrees) {
+        this.angle += degrees;
+        if (this.angle > 360) {
+            this.angle -= 360;
+        }
+    }
     draw(){
         ctx.beginPath();
         ctx.drawImage(birdImage,this.x,this.y,this.width,this.height);
@@ -116,7 +122,13 @@ function gameLoop(){
             secondPipeGoingDown.x = secondPipeGoingUp.x;
             secondPipeGoingDown.y = secondPipeGoingUp.y - 1100;
         }
+    
+    if (inDanger()) {
+        // Do nothing here, the rotation and falling is handled in the inDanger() function
+    } else {
+        bird.draw(); // Redraw the bird normally if it's not in danger
     }
+}
     if (bird.y >= 870 || inDanger()) {
         isGameOver = true;
         window.cancelAnimationFrame(raf);
@@ -136,6 +148,8 @@ function inDanger()
     {
         if(bird.y > firstPipeGoingUp.y - 50 || bird.y < firstPipeGoingDown.y + 800)
         {
+            bird.rotate(-90);
+            bird.dy = -5;
             return true;
         }
     }
@@ -144,6 +158,8 @@ function inDanger()
     {
         if(bird.y > secondPipeGoingUp.y - 50 || bird.y < secondPipeGoingDown.y + 800)
         {
+            bird.rotate(-90);
+            bird.dy = -5;
             return true;
         }
     }
@@ -151,6 +167,7 @@ function inDanger()
     {
         return false;
     }
+    
 }
 
 let birdImage = new Image();
