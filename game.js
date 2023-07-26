@@ -13,18 +13,21 @@ let text = document.getElementById("text");
 let velocity = 0;
 let gameIsRunning = false;
 
-class Bird{
-    constructor(x,y,width,height){
+class Bird {
+    constructor(x, y, width, height) {
         this.x = x;
         this.y = y;
         this.dy = 0;
         this.width = width;
         this.height = height;
-
+        this.rotation = 0; // New property to store rotation angle
     }
-    draw(){
-        ctx.beginPath();
-        ctx.drawImage(birdImage,this.x,this.y,this.width,this.height);
+    draw() {
+        ctx.save(); // Save the current canvas state
+        ctx.translate(this.x + this.width / 2, this.y + this.height / 2); // Translate to the center of the bird
+        ctx.rotate(this.rotation); // Apply rotation
+        ctx.drawImage(birdImage, -this.width / 2, -this.height / 2, this.width, this.height); // Draw the bird
+        ctx.restore(); // Restore the previous canvas state
     }
     reset(){
         this.x = 10;
@@ -86,6 +89,7 @@ function jump(event){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     let key = event.key;
     if (key == "ArrowUp"){
+        bird.rotation = -1;
         birdDrop();
         text.style.display = "none";
     }
@@ -116,14 +120,20 @@ function resetPipe(){
 }
 
 
-function gameLoop(){
-    if (!isGameOver && gameIsRunning){
-        ctx.clearRect(0,0,canvas.width,canvas.height);
+function gameLoop() {
+    if (!isGameOver && gameIsRunning) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         bird.x += 2;
+
+        // Calculate rotation angle based on bird's velocity
+        //bird.rotation = Math.atan2(bird.dy, 2) + Math.PI / 2;
         //bird.x = bird.x % canvas.width;
-        //The effect of gravity
         bird.dy = bird.dy + gravity;
         bird.y = bird.y + bird.dy;
+        if(bird.rotation < 1)
+        {
+            bird.rotation += 0.01;
+        }
         bird.draw();
         firstPipeGoingUp.draw();
         firstPipeGoingDown.draw();
@@ -147,12 +157,13 @@ function gameLoop(){
         isGameOver = true;
         endgame.style.display = "block";
         window.cancelAnimationFrame(raf);
+        
     }
     raf = window.requestAnimationFrame(gameLoop);
 }
 
 function birdDrop(){
-    bird.dy = -2;
+    bird.dy = -3;
 }
 
 
@@ -195,10 +206,10 @@ foregroundPicture.src = "foreground.jpg";
 let bird = new Bird(10,300,80,80);
 bird.draw();
 
-let firstPipeGoingUp = new PipeUp(Math.random() * 1000 + 100, Math.random() * 800 + 100, 100, 800);
+let firstPipeGoingUp = new PipeUp(Math.random() * 1000 + 500, Math.random() * 800 + 100, 100, 800);
 let firstPipeGoingDown = new PipeDown(firstPipeGoingUp.x, firstPipeGoingUp.y - 1100, 100, 800);
 
-let secondPipeGoingUp = new PipeUp(Math.random() * 1000 + 100, Math.random() * 800 + 100, 100, 800);
+let secondPipeGoingUp = new PipeUp(Math.random() * 1000 + 700, Math.random() * 800 + 100, 100, 800);
 let secondPipeGoingDown = new PipeDown(secondPipeGoingUp.x, secondPipeGoingUp.y - 1100, 100, 800);
 
 let foreground = new Foreground(0, 700, 2000, 100);
