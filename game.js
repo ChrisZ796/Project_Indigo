@@ -11,24 +11,21 @@ let text = document.getElementById("text");
 let velocity = 0;
 let gameIsRunning = false;
 
-class Bird{
-    constructor(x,y,width,height){
+class Bird {
+    constructor(x, y, width, height) {
         this.x = x;
         this.y = y;
         this.dy = 0;
         this.width = width;
         this.height = height;
-
+        this.rotation = 0; // New property to store rotation angle
     }
-    rotate(degrees) {
-        this.angle += degrees;
-        if (this.angle > 360) {
-            this.angle -= 360;
-        }
-    }
-    draw(){
-        ctx.beginPath();
-        ctx.drawImage(birdImage,this.x,this.y,this.width,this.height);
+    draw() {
+        ctx.save(); // Save the current canvas state
+        ctx.translate(this.x + this.width / 2, this.y + this.height / 2); // Translate to the center of the bird
+        ctx.rotate(this.rotation); // Apply rotation
+        ctx.drawImage(birdImage, -this.width / 2, -this.height / 2, this.width, this.height); // Draw the bird
+        ctx.restore(); // Restore the previous canvas state
     }
 }
 
@@ -85,6 +82,7 @@ function jump(event){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     let key = event.key;
     if (key == "ArrowUp"){
+        bird.rotation = -1;
         birdDrop();
         text.style.display = "none";
     }
@@ -96,14 +94,20 @@ function jump(event){
 
 
 
-function gameLoop(){
-    if (!isGameOver && gameIsRunning){
-        ctx.clearRect(0,0,canvas.width,canvas.height);
+function gameLoop() {
+    if (!isGameOver && gameIsRunning) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         bird.x += 2;
+
+        // Calculate rotation angle based on bird's velocity
+        //bird.rotation = Math.atan2(bird.dy, 2) + Math.PI / 2;
         //bird.x = bird.x % canvas.width;
-        //The effect of gravity
         bird.dy = bird.dy + gravity;
         bird.y = bird.y + bird.dy;
+        if(bird.rotation < 1)
+        {
+            bird.rotation += 0.01;
+        }
         bird.draw();
         firstPipeGoingUp.draw();
         firstPipeGoingDown.draw();
@@ -122,13 +126,7 @@ function gameLoop(){
             secondPipeGoingDown.x = secondPipeGoingUp.x;
             secondPipeGoingDown.y = secondPipeGoingUp.y - 1100;
         }
-    
-    if (inDanger()) {
-        // Do nothing here, the rotation and falling is handled in the inDanger() function
-    } else {
-        bird.draw(); // Redraw the bird normally if it's not in danger
     }
-}
     if (bird.y >= 870 || inDanger()) {
         isGameOver = true;
         window.cancelAnimationFrame(raf);
@@ -148,8 +146,6 @@ function inDanger()
     {
         if(bird.y > firstPipeGoingUp.y - 50 || bird.y < firstPipeGoingDown.y + 800)
         {
-            bird.rotate(-90);
-            bird.dy = -5;
             return true;
         }
     }
@@ -158,8 +154,6 @@ function inDanger()
     {
         if(bird.y > secondPipeGoingUp.y - 50 || bird.y < secondPipeGoingDown.y + 800)
         {
-            bird.rotate(-90);
-            bird.dy = -5;
             return true;
         }
     }
@@ -167,7 +161,6 @@ function inDanger()
     {
         return false;
     }
-    
 }
 
 let birdImage = new Image();
