@@ -1,6 +1,7 @@
 // declaring and initializing variable for stat
 let startButton = document.getElementById("start");
 let statPage = document.getElementById("stats");
+let currentTrack = new Audio("Castlevania-VampireKiller.ogg");
 let distance = 0;
 let coins = 0;
 let attempts = 0;
@@ -29,11 +30,13 @@ document.getElementById("settingTitle").addEventListener("click", backToMain, fa
 // this hide the elements on the page
 function hideElements()
 {
+    raiseUpElementbyID("mainContainer");
     document.getElementById("mainContainer").style.display = "none";
 }
 // show the page of stats
 function openStats()
-{
+{  
+    raiseUpElementbyID("mainContainer");
     document.getElementById("mainContainer").style.display = "none";
     document.getElementById("statContainer").style.display = "block";
     dropInElementbyID("statContainer");
@@ -41,10 +44,14 @@ function openStats()
 // head back to main from different pages
 function backToMain()
 {
+    raiseUpElementbyID("statContainer");
+    raiseUpElementbyID("settingsBar");
+    raiseUpElementbyID("Credits");
     document.getElementById("mainContainer").style.display = "block";
     document.getElementById("statContainer").style.display = "none";
     document.getElementById("settingsBar").style.display = "none";
     document.getElementById("Credits").style.display = "none";
+    dropInElementbyID("mainContainer");
 }
 // show the credit page
 function showCredits()
@@ -77,90 +84,25 @@ function dropInElementbyID(elementID) {
         }
     }
 }
+function raiseUpElementbyID(elementID) {
+    let element = document.getElementById(elementID);
+    element.style.position = "relative";
+    let pos = 0;
+    let movement = setInterval(moveUp, 3);
+    function moveUp() {
+        if (pos > 1000)
+        {
+            clearInterval(movement);
+        }
+        else
+        {
+            pos += 10;
+            element.style.bottom = pos + "px";
+        }
+    }
+}
 
-
-//Actual Game
-// let canvas = document.getElementById("canvas");
-// canvas.width = window.innerWidth;
-// canvas.height = window.innerHeight;
-// let ctx = canvas.getContext("2d");
-// document.addEventListener("keydown",jump,false);
-// let isGameOver = false;
-// let gravity = 0;
-// let raf;
-
-
-// let birdImage = new Image();
-// birdImage.src = "icon.png";
-
-
-// class Bird{
-//     constructor(x,y,width,height){
-//         this.x = x;
-//         this.y = y;
-//         this.width = width;
-//         this.height = height;
-
-//     }
-//     draw(){
-//         ctx.beginPath();
-//         ctx.drawImage(birdImage,this.x,this.y,this.width,this.height);
-//     }
-// }
-
-// let bird = new Bird(10,300,80,80);
-// bird.draw();
-
-// function jump(event){
-//     ctx.clearRect(0,0,canvas.width,canvas.height);
-//     let key = event.key;
-//     if (key == "ArrowUp"){
-//         bird.y -= 30;
-//         if (gravity == 0){
-//             gravity = 2;
-//             gameLoop();
-//         }
-//     }
-//     if (key == "ArrowRight"){
-//         bird.x += 100;
-//     }
-
-// }
-
-
-
-// function gameLoop(){
-//     if (!isGameOver){
-        
-//         ctx.clearRect(0,0,canvas.width,canvas.height);
-//         bird.x += 2;
-//         birdDrop();
-//         //The bottom property sets or returns the bottom position of a positioned element.
-//         //bird.y += "px"; 
-//         bird.draw();
-//         if (bird.x >= canvas.width + 5){
-//             bird.x %= canvas.width;
-//         }
-//         raf = requestAnimationFrame(gameLoop);
-//     }
-//     if (bird.y <= 0){
-//         isGameOver = true;
-//         window.cancelAnimationFrame(raf);
-        
-//         isGameOver = false;
-//     }
-// }
-
-// function birdDrop(){
-//     bird.y += gravity;
-// }
-
-
-
-
-
-
-
-
-
+function playAudio(url) {
+    new Audio(url).play();
+  }
 
