@@ -178,14 +178,3 @@ let foreground = new Foreground(0, 930, 2000, 100);
 foreground.draw();
 
 gameLoop();
-
-
-
-
-
-
-
-
-
-
-
