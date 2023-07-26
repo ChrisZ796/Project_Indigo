@@ -8,7 +8,6 @@ let gravity = 0;
 let raf;
 let text = document.getElementById("text");
 
-
 let birdImage = new Image();
 birdImage.src = "icon.png";
 
@@ -95,7 +94,14 @@ let secondPipeGoingDown = new PipeDown(secondPipeGoingUp.x, secondPipeGoingUp.y 
 let foreground = new Foreground(0, 930, 2000, 100);
 foreground.draw();
 
+let count = 0;
+
 function jump(event){
+    count++;
+    if(count == 1)
+    {
+        new Audio("Castlevania-VampireKiller.ogg").play();
+    }
     ctx.clearRect(0,0,canvas.width,canvas.height);
     let key = event.key;
     if (key == "ArrowUp"){
