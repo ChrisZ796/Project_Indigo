@@ -4,26 +4,18 @@ canvas.height = window.innerHeight;
 let ctx = canvas.getContext("2d");
 document.addEventListener("keydown",jump,false);
 let isGameOver = false;
-let gravity = 0;
+let gravity = 0.05;
 let raf;
 let text = document.getElementById("text");
-
-let birdImage = new Image();
-birdImage.src = "icon.png";
-
-let pipeImage = new Image();
-pipeImage.src = "birdPipe.png";
-
-let downPipeImage = new Image();
-downPipeImage.src = "birdPipeGoingDown.png";
-
-let foregroundPicture = new Image();
-foregroundPicture.src = "foreground.jpg";
+//New Bird Mechanics
+let velocity = 0;
+let gameIsRunning = false;
 
 class Bird{
     constructor(x,y,width,height){
         this.x = x;
         this.y = y;
+        this.dy = 0;
         this.width = width;
         this.height = height;
 
@@ -82,35 +74,13 @@ class Foreground
     }
 }
 
-let bird = new Bird(10,300,80,80);
-bird.draw();
-
-let firstPipeGoingUp = new PipeUp(Math.random() * 1000 + 100, Math.random() * 800 + 100, 100, 800);
-let firstPipeGoingDown = new PipeDown(firstPipeGoingUp.x, firstPipeGoingUp.y - 1100, 100, 800);
-
-let secondPipeGoingUp = new PipeUp(Math.random() * 1000 + 100, Math.random() * 800 + 100, 100, 800);
-let secondPipeGoingDown = new PipeDown(secondPipeGoingUp.x, secondPipeGoingUp.y - 1100, 100, 800);
-
-let foreground = new Foreground(0, 930, 2000, 100);
-foreground.draw();
-
-let count = 0;
-
 function jump(event){
-    count++;
-    if(count == 1)
-    {
-        new Audio("Castlevania-VampireKiller.ogg").play();
-    }
+    gameIsRunning = true;
     ctx.clearRect(0,0,canvas.width,canvas.height);
     let key = event.key;
     if (key == "ArrowUp"){
-        bird.y -= 30;
-        if (gravity == 0){
-            gravity = 2;
-            text.style.display = "none";
-            gameLoop();
-        }
+        birdDrop();
+        text.style.display = "none";
     }
     if (key == "ArrowRight"){
         bird.x += 100;
@@ -121,20 +91,22 @@ function jump(event){
 
 
 function gameLoop(){
-    if (!isGameOver){
+    if (!isGameOver && gameIsRunning){
         ctx.clearRect(0,0,canvas.width,canvas.height);
         bird.x += 2;
-        birdDrop();
-        //The bottom property sets or returns the bottom position of a positioned element.
-        //bird.y += "px"; 
+        //bird.x = bird.x % canvas.width;
+        //The effect of gravity
+        bird.dy = bird.dy + gravity;
+        bird.y = bird.y + bird.dy;
         bird.draw();
         firstPipeGoingUp.draw();
         firstPipeGoingDown.draw();
         secondPipeGoingUp.draw();
         secondPipeGoingDown.draw();
         foreground.draw();
-        if (bird.x >= canvas.width + 5){
-            bird.x %= canvas.width;
+        if (bird.x >= canvas.width)
+        {
+            bird.x = 0;
             firstPipeGoingUp.x = Math.random() * 1000 + 500;
             firstPipeGoingUp.y = Math.random() * 800 + 100;
             firstPipeGoingDown.x = firstPipeGoingUp.x;
@@ -144,18 +116,16 @@ function gameLoop(){
             secondPipeGoingDown.x = secondPipeGoingUp.x;
             secondPipeGoingDown.y = secondPipeGoingUp.y - 1100;
         }
-        raf = requestAnimationFrame(gameLoop);
     }
     if (bird.y >= 870 || inDanger()) {
         isGameOver = true;
         window.cancelAnimationFrame(raf);
-        
-        isGameOver = false;
     }
+    raf = window.requestAnimationFrame(gameLoop);
 }
 
 function birdDrop(){
-    bird.y += gravity;
+    bird.dy = -2;
 }
 
 function inDanger()
@@ -182,6 +152,31 @@ function inDanger()
     }
 }
 
+let birdImage = new Image();
+birdImage.src = "icon.png";
+
+let pipeImage = new Image();
+pipeImage.src = "birdPipe.png";
+
+let downPipeImage = new Image();
+downPipeImage.src = "birdPipeGoingDown.png";
+
+let foregroundPicture = new Image();
+foregroundPicture.src = "foreground.jpg";
+
+let bird = new Bird(10,300,80,80);
+bird.draw();
+
+let firstPipeGoingUp = new PipeUp(Math.random() * 1000 + 100, Math.random() * 800 + 100, 100, 800);
+let firstPipeGoingDown = new PipeDown(firstPipeGoingUp.x, firstPipeGoingUp.y - 1100, 100, 800);
+
+let secondPipeGoingUp = new PipeUp(Math.random() * 1000 + 100, Math.random() * 800 + 100, 100, 800);
+let secondPipeGoingDown = new PipeDown(secondPipeGoingUp.x, secondPipeGoingUp.y - 1100, 100, 800);
+
+let foreground = new Foreground(0, 930, 2000, 100);
+foreground.draw();
+
+gameLoop();
 
 
 
