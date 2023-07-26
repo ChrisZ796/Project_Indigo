@@ -94,6 +94,7 @@ function jump(event){
         gameIsRunning = false;
         bird.reset();
         resetPipe();
+        foreground.draw();
         endgame.style.display =  "none";
         text.style.display = "block";
 
