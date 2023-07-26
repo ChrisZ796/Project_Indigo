@@ -8,7 +8,6 @@ let gravity = 0;
 let raf;
 let text = document.getElementById("text");
 
-
 let birdImage = new Image();
 birdImage.src = "icon.png";
 
@@ -89,10 +88,20 @@ bird.draw();
 let firstPipeGoingUp = new PipeUp(Math.random() * 1000 + 100, Math.random() * 800 + 100, 100, 800);
 let firstPipeGoingDown = new PipeDown(firstPipeGoingUp.x, firstPipeGoingUp.y - 1100, 100, 800);
 
+let secondPipeGoingUp = new PipeUp(Math.random() * 1000 + 100, Math.random() * 800 + 100, 100, 800);
+let secondPipeGoingDown = new PipeDown(secondPipeGoingUp.x, secondPipeGoingUp.y - 1100, 100, 800);
+
 let foreground = new Foreground(0, 930, 2000, 100);
 foreground.draw();
 
+let count = 0;
+
 function jump(event){
+    count++;
+    if(count == 1)
+    {
+        new Audio("Castlevania-VampireKiller.ogg").play();
+    }
     ctx.clearRect(0,0,canvas.width,canvas.height);
     let key = event.key;
     if (key == "ArrowUp"){
@@ -121,17 +130,23 @@ function gameLoop(){
         bird.draw();
         firstPipeGoingUp.draw();
         firstPipeGoingDown.draw();
+        secondPipeGoingUp.draw();
+        secondPipeGoingDown.draw();
         foreground.draw();
         if (bird.x >= canvas.width + 5){
             bird.x %= canvas.width;
-            firstPipeGoingUp.x = Math.random() * 1000 + 100;
+            firstPipeGoingUp.x = Math.random() * 1000 + 500;
             firstPipeGoingUp.y = Math.random() * 800 + 100;
             firstPipeGoingDown.x = firstPipeGoingUp.x;
             firstPipeGoingDown.y = firstPipeGoingUp.y - 1100;
+            secondPipeGoingUp.x = Math.random() * 1000 + 500;
+            secondPipeGoingUp.y = Math.random() * 800 + 100;
+            secondPipeGoingDown.x = secondPipeGoingUp.x;
+            secondPipeGoingDown.y = secondPipeGoingUp.y - 1100;
         }
         raf = requestAnimationFrame(gameLoop);
     }
-    if (bird.y <= 0){
+    if (bird.y >= 870 || inDanger()) {
         isGameOver = true;
         window.cancelAnimationFrame(raf);
         
@@ -141,6 +156,30 @@ function gameLoop(){
 
 function birdDrop(){
     bird.y += gravity;
+}
+
+function inDanger()
+{
+    //Check the first set of pipes
+    if(bird.x > firstPipeGoingUp.x - 50 && bird.x < firstPipeGoingUp.x + 100)
+    {
+        if(bird.y > firstPipeGoingUp.y - 50 || bird.y < firstPipeGoingDown.y + 800)
+        {
+            return true;
+        }
+    }
+    //Check the second set of pipes
+    else if(bird.x > secondPipeGoingUp.x - 50 && bird.x < secondPipeGoingUp.x + 100)
+    {
+        if(bird.y > secondPipeGoingUp.y - 50 || bird.y < secondPipeGoingDown.y + 800)
+        {
+            return true;
+        }
+    }
+    else
+    {
+        return false;
+    }
 }
 
 
