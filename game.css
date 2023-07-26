@@ -1,8 +1,7 @@
 #flex{
     display: flex;
     gap: 10px;
-    width: 80vw;
-    height: 100vh;
+    width: 100%;
     margin: auto;
 }
 
@@ -10,5 +9,35 @@
     background-image: url("earthBackdrop.jpg");
     margin: 0;
     padding: 0;
+    width: 80vw;
+    height: 90vh;
     overflow: hidden;
+    margin: auto;
+}
+
+@font-face {
+    font-family: "classicText";
+    src: url("FlappybirdyRegular-KaBW.ttf");
+}
+
+#text{
+    text-align: center;
+    margin:auto;
+    font-size: 200%;
+    font-weight: bold;
+    font-family: "classicText";
+}
+
+#button{
+    font-family: "classicText";
+    text-align: center;
+    padding: 10px;
+    font-size: 7vh;
+    border-radius: 15%;
+    cursor: pointer;
+    background-color: skyblue;
+}
+
+body{
+    background-color: gray;
 }

@@ -7,11 +7,52 @@
     <link rel="stylesheet" href="homeScreen.css">
 </head>
 <body>
-    <h1 id="header">Flappy Bird</h1>
-    <h2 id="start"><a href = "flappyGame.html">START</a></h2>
-    <h2 id="stats"><a href = "flappyStats.html">STATISTICS</a></h2>
-    <h2 id="credits"><a href = "flappyCredits">CREDITS</a></h2>
-    <h2 id="settings"><a href = "flappySettings">SETTINGS</a></h2>
->>>>>>> main
+    <div id="mainContainer">
+        <h1 id="header" onclick = "playAudio('Castlevania-VampireKiller.ogg')">Flappy Bird</h1>
+        <h2 id="start"> <a href="flappyGame.html" style="text-decoration: none; color: black;">START</a></h2>
+        <h2 id="stats">STATISTICS</h2>
+        <h2 id="credits">CREDITS</h2>
+        <h2 id="settings">SETTINGS</h2>
+    </div>
+<!-- Below is Stat screen =========================================================== -->
+    <div id="statContainer">   
+        <h1 id="statHeader">STATS</h1>
+        <p class="stat">Longest Distance: <span id="distance" class="statSpan"></span></p>
+        <p class="stat">Coins Collected: <span id="coins" class="statSpan"></span></p>
+        <p class="stat">Total Attempts: <span id="attempts" class="statSpan"></span></p>
+    </div>
+<!-- Below is Credits screen  =====================================================   -->
+    <div id = "Credits">
+        <h1 id = "creditsHeader">CREDITS</h1>
+        <p class = "contributor">Christopher Zhang</p>
+        <p class="contributor">Cindy Zheng</p>
+        <p class = "contributor">Hao Ran Gou</p>
+        <p class = "contributor">Jarron Deng</p>
+        <p class = "contributor">Owen Kingsley</p>
+    </div>
+<!-- Below is Settings screen =====================================================   -->
+    <div id="settingsBar">
+        <h1 id="settingTitle">Settings</h1>
+        <div id="planets">
+            <h2 id="earth">Earth</h2>
+            <h2 id="mars">Mars</h2>
+        </div>
+        <div id="description">
+            <!-- speed the bird fall -->
+            <p>gravity: <span id="gravity"></span></p>     
+            <!-- height of one jump -->
+            <p>oxygen: <span id="oxygen"></span></p>
+            <!-- speed of the pillars(or the bird if you want to say it this way) -->
+            <p>wind speed: <span id="wind"></span></p>
+            <!-- amount of pillars and obsticles -->
+            <p>complexity of terrain: <span id="complexity"></span></p>
+            <!-- size of the bird -->
+            <p>atmosphere pressure: <span id="pressure"></span></p>
+            <!-- size of one gap -->
+            <p>gap of pillars: <span id="gap"></span></p>
+        </div>
+        
+    </div>
+    <script src = "gameScript.js"></script>
 </body>
 </html>
