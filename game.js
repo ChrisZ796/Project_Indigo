@@ -120,6 +120,7 @@ function gameLoop(){
     if (bird.y >= 870 || inDanger()) {
         isGameOver = true;
         window.cancelAnimationFrame(raf);
+        
     }
     raf = window.requestAnimationFrame(gameLoop);
 }
