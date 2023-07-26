@@ -28,6 +28,14 @@
     font-family: "classicText";
 }
 
+#endGame{
+    text-align: center;
+    margin:auto;
+    font-size: 200%;
+    font-weight: bold;
+    font-family: "classicText";
+}
+
 #button{
     font-family: "classicText";
     text-align: center;
