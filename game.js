@@ -12,6 +12,12 @@ let text = document.getElementById("text");
 //New Bird Mechanics
 let velocity = 0;
 let gameIsRunning = false;
+<<<<<<< HEAD
+=======
+let pipeGap = 300;
+let soundCount = 0;
+let musicCount = 0;
+>>>>>>> 6aa4b63f73b032c362c4fc3fa7d06a7524a0bdf6
 let scoreElement = document.getElementById("score");
 let score = 0;
 scoreElement.textContent = score;
@@ -36,6 +42,7 @@ class Bird {
         this.x = 10;
         this.y = 300;
         this.dy = 0;
+        isGameOver = false;
     }
 }
 
@@ -92,6 +99,12 @@ function jump(event){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     let key = event.key;
     if (key == "ArrowUp"){
+        if(musicCount == 0)
+        {
+            new Audio(src = "Castlevania-VampireKiller.ogg").play();
+            musicCount++;
+        }
+        new Audio(src = "Flap.mp3").play();
         bird.rotation = -1;
         birdDrop();
         text.style.display = "none";
@@ -101,27 +114,26 @@ function jump(event){
         gameIsRunning = false;
         bird.reset();
         resetPipe();
+        soundCount = 0;
+        musicCount = 0;
         foreground.draw();
         score = 0;
         scoreElement.textContent = 0;
         endgame.style.display =  "none";
         text.style.display = "block";
-
-
-
     }
 
 }
 
 function resetPipe(){
-    firstPipeGoingUp.x = Math.random() * 1000 + 500;
+    firstPipeGoingUp.x = Math.random() * 800 + 200;
     firstPipeGoingUp.y = Math.random() * 800 + 100;
     firstPipeGoingDown.x = firstPipeGoingUp.x;
-    firstPipeGoingDown.y = firstPipeGoingUp.y - 1100;
-    secondPipeGoingUp.x = Math.random() * 1000 + 500;
-    secondPipeGoingUp.y = Math.random() * 800 + 100;
+    firstPipeGoingDown.y = firstPipeGoingUp.y - 800 - pipeGap;
+    secondPipeGoingUp.x = Math.random() * 400 + 200 + firstPipeGoingUp.x;
+    secondPipeGoingUp.y = Math.random() * 500 + 500;
     secondPipeGoingDown.x = secondPipeGoingUp.x;
-    secondPipeGoingDown.y = secondPipeGoingUp.y - 1100;
+    secondPipeGoingDown.y = secondPipeGoingUp.y - 800 - pipeGap;
 }
 
 
@@ -154,7 +166,10 @@ function gameLoop() {
         foreground.draw();
         if (bird.x >= canvas.width)
         {
+            new Audio(src = "Point.mp3").play();
+            resetPipe();
             bird.x = 0;
+<<<<<<< HEAD
             firstPipeGoingUp.x = Math.random() * 1000 + 500;
             firstPipeGoingUp.y = Math.random() * 800 + 100;
             firstPipeGoingDown.x = firstPipeGoingUp.x;
@@ -163,15 +178,21 @@ function gameLoop() {
             secondPipeGoingUp.y = Math.random() * 800 + 100;
             secondPipeGoingDown.x = secondPipeGoingUp.x;
             secondPipeGoingDown.y = secondPipeGoingUp.y - 1100;
+=======
+>>>>>>> 6aa4b63f73b032c362c4fc3fa7d06a7524a0bdf6
             score++;
             scoreElement.textContent = score;
         }
     }
-    if (bird.y >= 640 || inDanger()) {
+    if (bird.y >= 930 || inDanger()) {
         isGameOver = true;
         endgame.style.display = "block";
         window.cancelAnimationFrame(raf);
-        
+        if(soundCount == 0)
+        {
+            new Audio(src = "Death.mp3").play();
+            soundCount++;
+        }
     }
     raf = window.requestAnimationFrame(gameLoop);
 }
@@ -180,13 +201,12 @@ function birdDrop(){
     bird.dy = -3;
 }
 
-
 function inDanger()
 {
     //Check the first set of pipes
     if(bird.x > firstPipeGoingUp.x - 50 && bird.x < firstPipeGoingUp.x + 100)
     {
-        if(bird.y > firstPipeGoingUp.y - 50 || bird.y < firstPipeGoingDown.y + 800)
+        if(bird.y > firstPipeGoingUp.y - 50 || bird.y < firstPipeGoingDown.y + 770)
         {
             return true;
         }
@@ -194,7 +214,7 @@ function inDanger()
     //Check the second set of pipes
     else if(bird.x > secondPipeGoingUp.x - 50 && bird.x < secondPipeGoingUp.x + 100)
     {
-        if(bird.y > secondPipeGoingUp.y - 50 || bird.y < secondPipeGoingDown.y + 800)
+        if(bird.y > secondPipeGoingUp.y - 50 || bird.y < secondPipeGoingDown.y + 770)
         {
             return true;
         }
@@ -220,13 +240,21 @@ foregroundPicture.src = "foreground.jpg";
 let bird = new Bird(10,300,80,80);
 bird.draw();
 
+<<<<<<< HEAD
 let firstPipeGoingUp = new PipeUp(Math.random() * 1000 + 500, Math.random() * 800 + 100, 100, 820);
 let firstPipeGoingDown = new PipeDown(firstPipeGoingUp.x, firstPipeGoingUp.y - 1100, 100, 820);
 
 let secondPipeGoingUp = new PipeUp(Math.random() * 1000 + 700, Math.random() * 800 + 100, 100, 820);
 let secondPipeGoingDown = new PipeDown(secondPipeGoingUp.x, secondPipeGoingUp.y - 1100, 100, 820);
+=======
+let firstPipeGoingUp = new PipeUp(Math.random() * 800 + 200, Math.random() * 800 + 100, 100, 800);
+let firstPipeGoingDown = new PipeDown(firstPipeGoingUp.x, firstPipeGoingUp.y - 800 - pipeGap, 100, 800);
 
-let foreground = new Foreground(0, 700, 2000, 100);
+let secondPipeGoingUp = new PipeUp(Math.random() * 400 + 200 + firstPipeGoingUp.x, Math.random() * 500 + 500, 100, 800);
+let secondPipeGoingDown = new PipeDown(secondPipeGoingUp.x, secondPipeGoingUp.y - 800 - pipeGap, 100, 800);
+>>>>>>> 6aa4b63f73b032c362c4fc3fa7d06a7524a0bdf6
+
+let foreground = new Foreground(0, 930, 2000, 100);
 foreground.draw();
 
 gameLoop();

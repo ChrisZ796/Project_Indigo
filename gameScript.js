@@ -29,6 +29,30 @@ creditsButton.addEventListener("click", showCredits, false);
 document.getElementById("settings").addEventListener("click", openSettings, false);
 
 document.getElementById("settingTitle").addEventListener("click", backToMain, false);
+
+let Earth = {
+    gravStrength: "Normal",
+    windSpeed: "Normal",
+    hasOxygen: "Yes"
+  };
+
+let Moon = {
+    gravStrength: "Low",
+    windSpeed: "Normal",
+    hasOxygen: "Yes"
+  };
+
+let Argonia = {
+    gravStrength: "High",
+    windSpeed: "Slow",
+    hasOxygen: "No"
+  };
+
+  let Jubilee = {
+    gravStrength: "Low",
+    windSpeed: "Fast",
+    hasOxygen: "Yes"
+  };
 // this hide the elements on the page
 function hideElements()
 {
