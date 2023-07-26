@@ -136,7 +136,7 @@ function gameLoop() {
 }
 
 function birdDrop(){
-    bird.dy = -2;
+    bird.dy = -3;
 }
 
 function inDanger()
@@ -178,10 +178,10 @@ foregroundPicture.src = "foreground.jpg";
 let bird = new Bird(10,300,80,80);
 bird.draw();
 
-let firstPipeGoingUp = new PipeUp(Math.random() * 1000 + 100, Math.random() * 800 + 100, 100, 800);
+let firstPipeGoingUp = new PipeUp(Math.random() * 1000 + 500, Math.random() * 800 + 100, 100, 800);
 let firstPipeGoingDown = new PipeDown(firstPipeGoingUp.x, firstPipeGoingUp.y - 1100, 100, 800);
 
-let secondPipeGoingUp = new PipeUp(Math.random() * 1000 + 100, Math.random() * 800 + 100, 100, 800);
+let secondPipeGoingUp = new PipeUp(Math.random() * 1000 + 700, Math.random() * 800 + 100, 100, 800);
 let secondPipeGoingDown = new PipeDown(secondPipeGoingUp.x, secondPipeGoingUp.y - 1100, 100, 800);
 
 let foreground = new Foreground(0, 930, 2000, 100);
