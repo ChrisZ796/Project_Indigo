@@ -61,12 +61,12 @@ body{
 }
 #settingsBar{
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(4,1fr);
     grid-template-areas: 
-        "ti ti ti"
-        "pl de de"
-        "pl de de"
-        "pl de de";
+        "ti ti ti ti"
+        "pl gs ox ws"
+        "pl gs ox ws"
+        "pl gs ox ws";
     font-family: classicText;
     font-size: 50px;
     display: none;
@@ -81,10 +81,29 @@ span{
     justify-content: space-around;
     margin: auto;
 }
-#description{
-    grid-area: de;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.gravity{
+    grid-area: gs;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    grid-template-columns: 1fr;
+    margin: auto;
+}
+.oxygen{
+    grid-area: ox;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    grid-template-columns: 1fr;
+    margin: auto;
+}
+.wind{
+    grid-area: ws;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    grid-template-columns: 1fr;
+    margin: auto;
 }
 #settingTitle{
     grid-area: ti;

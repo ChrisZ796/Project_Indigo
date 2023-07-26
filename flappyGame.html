@@ -7,14 +7,18 @@
     <link rel="stylesheet" href="game.css">
 </head>
 <body>
-    <div id = "flex">
-        <canvas id="canvas" style="border: 1px solid black" width="800" height="600"></canvas>
+    <div id="container">
+        <canvas id="canvas" style="border: 1px solid black" width="700" height="600"></canvas>
+        <h2>SCORE: <span id="score" class="statSpan"></span></h2>
     </div>
+
     <p id = "text">Tap UP arrow to begin!</p>
     <p id = "endGame">Gameover! Tap "e" to restart the game!</p>
+
     <a href = "homeScreen.html">
         <button id = "button">BACK</button>
     </a>
+    
     <script src="game.js"></script>
     
 </body>

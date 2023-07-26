@@ -15,6 +15,9 @@ let gameIsRunning = false;
 let pipeGap = 300;
 let soundCount = 0;
 let musicCount = 0;
+let scoreElement = document.getElementById("score");
+let score = 0;
+scoreElement.textContent = score;
 
 class Bird {
     constructor(x, y, width, height) {
@@ -111,6 +114,8 @@ function jump(event){
         soundCount = 0;
         musicCount = 0;
         foreground.draw();
+        score = 0;
+        scoreElement.textContent = 0;
         endgame.style.display =  "none";
         text.style.display = "block";
     }
@@ -154,6 +159,8 @@ function gameLoop() {
             new Audio(src = "Point.mp3").play();
             resetPipe();
             bird.x = 0;
+            score++;
+            scoreElement.textContent = score;
         }
     }
     if (bird.y >= 930 || inDanger()) {
