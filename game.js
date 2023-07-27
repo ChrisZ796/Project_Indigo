@@ -2,6 +2,16 @@ let canvas = document.getElementById("canvas");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 let ctx = canvas.getContext("2d");
+// Load the gif image
+let gifImage = new Image();
+gifImage.src = "oxygen.gif";
+
+// Resize the gif image
+gifImage.width = 100;
+gifImage.height = 100;
+
+// Draw the gif image on the canvas
+ctx.drawImage(gifImage, 10, 10);
 document.addEventListener("keydown",jump,false);
 let isGameOver = false;
 let gravity = 0.05;
@@ -19,6 +29,14 @@ let scoreElement = document.getElementById("score");
 let score = 0;
 let oxygenElement = document.getElementById("oxygenValue"); // Select the oxygen display element
 let oxygen = 100;
+let oxygenGifImage = new Image();
+oxygenGifImage.src = "oxygen.gif";
+oxygenGifImage.width = 50;
+oxygenGifImage.height = 50;
+oxygenGifImage.onload = function() {
+    gameLoop();
+  };
+let oxygenGifFrames = 0; // Counter to control the oxygen GIF frames
 const oxygenDecreaseRate = 0.07; // Adjust this value to control the oxygen decrease rate
 const oxygenReplenishAmount = 40; // Adjust this value to control how much oxygen is replenished when the bird passes through a gap
 scoreElement.textContent = score;
@@ -210,7 +228,16 @@ function gameLoop() {
             soundCount++;
         }
     }
+    if (oxygenGifFrames >= 30 && Math.random() < 0.1) {
+        var x = Math.random() * (secondPipeGoingDown.x - firstPipeGoingUp.x) + firstPipeGoingUp.x;
+        var y = Math.random() * (secondPipeGoingDown.y - firstPipeGoingUp.y) + firstPipeGoingUp.y + 800;
+        ctx.drawImage(oxygenGifImage, x, y, 50, 50);
+        oxygenGifFrames = 0; // Reset the frame counter
+      }
+    
+    oxygenGifFrames++;
     raf = window.requestAnimationFrame(gameLoop);
+
 }
 
 function birdDrop(){
