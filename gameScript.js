@@ -161,6 +161,11 @@ function toggleSoundIcon()
     }
 }
 function changeEarth() {
+    document.getElementById("musicTrack").pause();
+    document.getElementById("musicTrack").currentTime = 0;
+    document.getElementById("musicSource").src = "Castlevania-VampireKiller.ogg";
+    document.getElementById("musicTrack").load();
+    document.getElementById("musicTrack").play();
     currentPlanet = "EARTH";
     pipeGap = 300;
     localStorage.setItem("pipeGap", pipeGap);
@@ -177,6 +182,11 @@ function changeEarth() {
 }
 
 function changeMoon() {
+    document.getElementById("musicTrack").pause();
+    document.getElementById("musicTrack").currentTime = 0;
+    document.getElementById("musicSource").src = "MoonTheme.ogg";
+    document.getElementById("musicTrack").load();
+    document.getElementById("musicTrack").play();
     currentPlanet = "MOON";
     pipeGap = 400;
     localStorage.setItem("pipeGap", pipeGap);
@@ -193,6 +203,11 @@ function changeMoon() {
 }
 
 function changeJubilee() {
+    document.getElementById("musicTrack").pause();
+    document.getElementById("musicTrack").currentTime = 0;
+    document.getElementById("musicSource").src = "JubileeTheme.ogg";
+    document.getElementById("musicTrack").load();
+    document.getElementById("musicTrack").play();
     currentPlanet = "JUBILEE";
     pipeGap = 500;
     localStorage.setItem("pipeGap", pipeGap);
@@ -209,6 +224,11 @@ function changeJubilee() {
 }
 
 function changeArgonia() {
+    document.getElementById("musicTrack").pause();
+    document.getElementById("musicTrack").currentTime = 0;
+    document.getElementById("musicSource").src = "ArgoniaTheme.ogg";
+    document.getElementById("musicTrack").load();
+    document.getElementById("musicTrack").play();
     currentPlanet = "ARGONIA";
     pipeGap = 100;
     localStorage.setItem("pipeGap", pipeGap);

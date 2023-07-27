@@ -183,7 +183,6 @@ function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (!isGameOver && gameIsRunning) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        initGame();
         bird.x += 2 + score/5 + windSpeed;
         oxygen -= oxygenDecreaseRate;
 
@@ -332,6 +331,11 @@ function initGame()
     let background;
     if(currentPlanet == "EARTH")
     {
+        document.getElementById("musicTrack").pause();
+        document.getElementById("musicTrack").currentTime = 0;
+        document.getElementById("musicSource").src = "Castlevania-VampireKiller.ogg";
+        document.getElementById("musicTrack").load();
+        document.getElementById("musicTrack").play();
         document.getElementById("canvas").style.backgroundImage = "url('earthBackdrop.jpg')";
         gravity = 0.05;
         windSpeed = 0;
@@ -342,6 +346,11 @@ function initGame()
     }
     else if(currentPlanet == "MOON")
     {
+        document.getElementById("musicTrack").pause();
+        document.getElementById("musicTrack").currentTime = 0;
+        document.getElementById("musicSource").src = "MoonTheme.ogg";
+        document.getElementById("musicTrack").load();
+        document.getElementById("musicTrack").play();
         document.getElementById("canvas").style.backgroundImage = "url('Moon Landscape.png')";
         gravity = 0.02;
         windSpeed = -0.5;
@@ -351,16 +360,26 @@ function initGame()
     }
     else if(currentPlanet == "ARGONIA")
     {
+        document.getElementById("musicTrack").pause();
+        document.getElementById("musicTrack").currentTime = 0;
+        document.getElementById("musicSource").src = "ArgoniaTheme.ogg";
+        document.getElementById("musicTrack").load();
+        document.getElementById("musicTrack").play();
         document.getElementById("canvas").style.backgroundImage = "url('Argonia Landscape.jpg')";
         gravity = 0.1;
-        windSpeed = -1;
+        windSpeed = 4;
         hasOxygen = false;
-        pipeGap = 200;
+        pipeGap = 700;
         foregroundPicture.src = "argoniaForeground.png";
     }
 
     else if(currentPlanet == "JUBILEE")
     {
+        document.getElementById("musicTrack").pause();
+        document.getElementById("musicTrack").currentTime = 0;
+        document.getElementById("musicSource").src = "JubileeTheme.ogg";
+        document.getElementById("musicTrack").load();
+        document.getElementById("musicTrack").play();
         document.getElementById("canvas").style.backgroundImage = "url('Jubilee Landscape.jpg')";
         gravity = 0.04;
         windSpeed = 2;
@@ -415,4 +434,5 @@ let foreground = new Foreground(0, 930, 2000, 100);
 foreground.draw();
 
 checkColor();
+initGame();
 gameLoop();
