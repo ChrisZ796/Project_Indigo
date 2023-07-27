@@ -6,7 +6,7 @@ document.addEventListener("keydown",jump,false);
 let isGameOver = false;
 let gravity = 0.05;
 let windSpeed = 0;
-let hasOxygen = false;
+let hasOxygen = true;
 let raf;
 let endgame = document.getElementById("endGame");
 endgame.style.display = "none";
@@ -28,6 +28,9 @@ let highScore = 0;
 let attempts = Number(localStorage.getItem("attempts"));
 let currentPlanet = localStorage.getItem("currentPlanet");
 scoreElement.textContent = score;
+attempts++;
+sessionStorage.setItem("attempts", attempts);
+let oxygenRegen = 0.07;
 
 class Bird {
     constructor(x, y, width, height) {
@@ -101,6 +104,21 @@ class Foreground
     }
 }
 
+class Bubble
+{
+    constructor(x,y,width,height)
+    {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+    draw()
+    {
+        ctx.beginPath();
+        ctx.drawImage(oxyBubble, this.x, this.y, this.width, this.height);
+    }
+}
 function jump(event){
     gameIsRunning = true;
     ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -117,6 +135,7 @@ function jump(event){
         text.style.display = "none";
     }
     if (key == "e"){
+        document.getElementById("musicTrack").play();
         isGameOver = false;
         gameIsRunning = false;
         bird.reset();
@@ -128,9 +147,10 @@ function jump(event){
         scoreElement.textContent = 0;
         endgame.style.display =  "none";
         text.style.display = "block";
-        oxygen += oxygenReplenishAmount;
+        attempts++;
+        sessionStorage.setItem("attempts", attempts);
+        oxygen = 100;
     }
-
 }
 
 function resetPipe(){
@@ -142,6 +162,10 @@ function resetPipe(){
     secondPipeGoingUp.y = Math.random() * 500 + 500;
     secondPipeGoingDown.x = secondPipeGoingUp.x;
     secondPipeGoingDown.y = secondPipeGoingUp.y - 800 - pipeGap;
+    firstOxygenBubble.x = firstPipeGoingUp.x;
+    firstOxygenBubble.y = firstPipeGoingUp.y - (Math.random() * 200 + 50);
+    secondOxygenBubble.x = secondPipeGoingUp.x;
+    secondOxygenBubble.y = secondPipeGoingUp.y - (Math.random() * 200 + 50);
     if(secondPipeGoingUp.x >= canvas.width)
     {
         resetPipe();
@@ -172,15 +196,26 @@ function gameLoop() {
         secondPipeGoingUp.draw();
         secondPipeGoingDown.draw();
         foreground.draw();
-        if (bird.x >= firstPipeGoingUp.x && bird.x <= firstPipeGoingUp.x + firstPipeGoingUp.width) {
-            // Replenish oxygen when the bird passes through the gap
-            firstPipeGoingUp.isPassed = true;
-            oxygen += oxygenReplenishAmount;
+        if(hasOxygen)
+        {
+            oxygen = 100;
         }
-        if (bird.x >= secondPipeGoingUp.x && bird.x <= secondPipeGoingUp.x + secondPipeGoingUp.width) {
-            // Replenish oxygen when the bird passes through the gap
-            secondPipeGoingUp.isPassed = true;
-            oxygen += oxygenReplenishAmount;
+        else(!hasOxygen)
+        {
+            firstOxygenBubble.draw();
+            secondOxygenBubble.draw();
+        }
+        if (bird.x >= firstOxygenBubble.x && bird.x <= firstOxygenBubble.x + firstOxygenBubble.width) {
+            if(bird.y >= firstOxygenBubble.y && bird.y <= firstOxygenBubble.y + firstOxygenBubble.width)
+            {
+                oxygen += oxygenReplenishAmount;
+            }
+        }
+        else if (bird.x >= secondOxygenBubble.x && bird.x <= secondOxygenBubble.x + secondOxygenBubble.width) {
+            if(bird.y >= secondOxygenBubble.y && bird.y <= secondOxygenBubble.y + firstOxygenBubble.width)
+            {
+                oxygen += oxygenReplenishAmount;
+            }
         }
         else
         {
@@ -218,8 +253,7 @@ function gameLoop() {
             isGameOver = true;
             endgame.style.display = "block";
             window.cancelAnimationFrame(raf);
-            attempts++;
-            sessionStorage.setItem("attempts", attempts);
+            document.getElementById("musicTrack").pause();
             if(score > highScore)
             {
                 highScore = score;
@@ -279,55 +313,38 @@ function initGame()
         document.getElementById("canvas").style.backgroundImage = "url('earthBackdrop.jpg')";
         gravity = 0.05;
         windSpeed = 0;
+        oxygenRegen = 1;
+        hasOxygen = true;
+        pipeGap = 300;
     }
     else if(currentPlanet == "MOON")
     {
         document.getElementById("canvas").style.backgroundImage = "url('Moon Landscape.png')";
         gravity = 0.02;
         windSpeed = -0.5;
+        hasOxygen = false;
+        pipeGap = 500;
     }
     else if(currentPlanet == "ARGONIA")
     {
         document.getElementById("canvas").style.backgroundImage = "url('Argonia Landscape.jpg')";
         gravity = 0.1;
         windSpeed = -1;
+        hasOxygen = false;
+        pipeGap = 200;
     }
+
     else if(currentPlanet == "JUBILEE")
     {
         document.getElementById("canvas").style.backgroundImage = "url('Jubilee Landscape.jpg')";
         gravity = 0.04;
         windSpeed = 2;
+        hasOxygen = true;
+        pipeGap = 400;
     }
 }
 
-function initGame()
-{
-    let background;
-    if(currentPlanet == "EARTH")
-    {
-        document.getElementById("canvas").style.backgroundImage = "url('earthBackdrop.jpg')";
-        gravity = 0.05;
-        windSpeed = 0;
-    }
-    else if(currentPlanet == "MOON")
-    {
-        document.getElementById("canvas").style.backgroundImage = "url('Moon Landscape.png')";
-        gravity = 0.02;
-        windSpeed = -0.5;
-    }
-    else if(currentPlanet == "ARGONIA")
-    {
-        document.getElementById("canvas").style.backgroundImage = "url('Argonia Landscape.jpg')";
-        gravity = 0.1;
-        windSpeed = -1;
-    }
-    else if(currentPlanet == "JUBILEE")
-    {
-        document.getElementById("canvas").style.backgroundImage = "url('Jubilee Landscape.jpg')";
-        gravity = 0.04;
-        windSpeed = 2;
-    }
-}
+initGame();
 
 let birdImage = new Image();
 birdImage.src = "icon.png";
@@ -341,6 +358,9 @@ downPipeImage.src = "birdPipeGoingDown.png";
 let foregroundPicture = new Image();
 foregroundPicture.src = "foregroundEarth.jpg";
 
+let oxyBubble = new Image();
+oxyBubble.src = "Oxy Bubble.gif";
+
 let bird = new Bird(10,300,80,80);
 bird.draw();
 
@@ -350,6 +370,15 @@ let firstPipeGoingDown = new PipeDown(firstPipeGoingUp.x, firstPipeGoingUp.y - 8
 let secondPipeGoingUp = new PipeUp(Math.random() * 400 + 400 + firstPipeGoingUp.x, Math.random() * 500 + 500, 100, 800);
 let secondPipeGoingDown = new PipeDown(secondPipeGoingUp.x, secondPipeGoingUp.y - 800 - pipeGap, 100, 800);
 
+let firstOxygenBubble = new Bubble(firstPipeGoingUp.x, firstPipeGoingUp.y - 100, 100, 100);
+let secondOxygenBubble = new Bubble(secondPipeGoingUp.x, secondPipeGoingUp.y - 100, 100, 100);
+if(hasOxygen)
+{
+    firstOxygenBubble.x = -100;
+    firstOxygenBubble.y = -100;
+    secondOxygenBubble.x = -100;
+    secondOxygenBubble.y = -100;
+}
 if(secondPipeGoingUp.x >= canvas.width)
 {
     resetPipe();
@@ -358,5 +387,4 @@ if(secondPipeGoingUp.x >= canvas.width)
 let foreground = new Foreground(0, 930, 2000, 100);
 foreground.draw();
 
-initGame();
 gameLoop();
