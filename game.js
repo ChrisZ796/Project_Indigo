@@ -38,6 +38,14 @@ sessionStorage.setItem("attempts", attempts);
 let oxygenRegen = 0.07;
 
 class Bird {
+    get hitbox() {
+        return {
+            x: this.x + 15,
+            y: this.y + 10,
+            width: this.width - 30,
+            height: this.height - 20
+        };
+    }
     constructor(x, y, width, height) {
         this.x = x;
         this.y = y;
@@ -63,6 +71,14 @@ class Bird {
 
 class PipeUp
 {
+    get hitbox() {
+        return {
+            x: this.x + 10,
+            y: this.y,
+            width: this.width - 20,
+            height: this.height
+        }; 
+    }
     constructor(x,y,width,height)
     {
         this.x = x;
@@ -79,6 +95,14 @@ class PipeUp
 
 class PipeDown
 {
+    get hitbox() {
+        return {
+            x: this.x + 10,
+            y: this.y + 50,
+            width: this.width - 20,
+            height: this.height - 50
+        };
+    }
     constructor(x,y,width,height)
     {
         this.x = x;
@@ -123,6 +147,29 @@ class Bubble
         ctx.beginPath();
         ctx.drawImage(oxyBubble, this.x, this.y, this.width, this.height);
     }
+}
+function checkCollision(bird, pipes) {
+    // Get the hitbox of the bird
+    const birdHitbox = bird.hitbox;
+
+    // Check for collision with each pipe
+    for (const pipe of pipes) {
+        const pipeHitbox = pipe.hitbox;
+
+        // Perform the collision check
+        if (
+            birdHitbox.x < pipeHitbox.x + pipeHitbox.width &&
+            birdHitbox.x + birdHitbox.width > pipeHitbox.x &&
+            birdHitbox.y < pipeHitbox.y + pipeHitbox.height &&
+            birdHitbox.y + birdHitbox.height > pipeHitbox.y
+        ) {
+            // Collision detected
+            return true;
+        }
+    }
+
+    // No collision detected
+    return false;
 }
 function jump(event){
     gameIsRunning = true;
