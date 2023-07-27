@@ -5,6 +5,8 @@ let ctx = canvas.getContext("2d");
 document.addEventListener("keydown",jump,false);
 let isGameOver = false;
 let gravity = 0.05;
+let windSpeed = 0;
+let hasOxygen = false;
 let raf;
 let endgame = document.getElementById("endGame");
 endgame.style.display = "none";
@@ -17,6 +19,13 @@ let soundCount = 0;
 let musicCount = 0;
 let scoreElement = document.getElementById("score");
 let score = 0;
+let oxygenElement = document.getElementById("oxygenValue"); // Select the oxygen display element
+let oxygen = 100;
+const oxygenDecreaseRate = 0.07; // Adjust this value to control the oxygen decrease rate
+const oxygenReplenishAmount = 40; // Adjust this value to control how much oxygen is replenished when the bird passes through a gap
+scoreElement.textContent = score;
+let highScore = 0;
+let attempts = Number(localStorage.getItem("attempts"));
 scoreElement.textContent = score;
 
 class Bird {
@@ -118,26 +127,32 @@ function jump(event){
         scoreElement.textContent = 0;
         endgame.style.display =  "none";
         text.style.display = "block";
+        oxygen += oxygenReplenishAmount;
     }
 
 }
 
 function resetPipe(){
-    firstPipeGoingUp.x = Math.random() * 800 + 200;
+    firstPipeGoingUp.x = Math.random() * 800 + 300;
     firstPipeGoingUp.y = Math.random() * 800 + 100;
     firstPipeGoingDown.x = firstPipeGoingUp.x;
     firstPipeGoingDown.y = firstPipeGoingUp.y - 800 - pipeGap;
-    secondPipeGoingUp.x = Math.random() * 400 + 200 + firstPipeGoingUp.x;
+    secondPipeGoingUp.x = Math.random() * 400 + 400 + firstPipeGoingUp.x;
     secondPipeGoingUp.y = Math.random() * 500 + 500;
     secondPipeGoingDown.x = secondPipeGoingUp.x;
     secondPipeGoingDown.y = secondPipeGoingUp.y - 800 - pipeGap;
+    if(secondPipeGoingUp.x >= canvas.width)
+    {
+        resetPipe();
+    }
 }
 
 
 function gameLoop() {
     if (!isGameOver && gameIsRunning) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        bird.x += 2 + score/5;
+        bird.x += 2 + score/5 + windSpeed;
+        oxygen -= oxygenDecreaseRate;
 
         // Calculate rotation angle based on bird's velocity
         //bird.rotation = Math.atan2(bird.dy, 2) + Math.PI / 2;
@@ -154,6 +169,32 @@ function gameLoop() {
         secondPipeGoingUp.draw();
         secondPipeGoingDown.draw();
         foreground.draw();
+        if (bird.x >= firstPipeGoingUp.x && bird.x <= firstPipeGoingUp.x + firstPipeGoingUp.width) {
+            // Replenish oxygen when the bird passes through the gap
+            firstPipeGoingUp.isPassed = true;
+            oxygen += oxygenReplenishAmount;
+        }
+        if (bird.x >= secondPipeGoingUp.x && bird.x <= secondPipeGoingUp.x + secondPipeGoingUp.width) {
+            // Replenish oxygen when the bird passes through the gap
+            secondPipeGoingUp.isPassed = true;
+            oxygen += oxygenReplenishAmount;
+        }
+        else
+        {
+            firstPipeGoingDown.isPassed = false;
+            secondPipeGoingUp.isPassed = false;
+        }
+        oxygen = Math.max(0, Math.min(100, oxygen));
+        oxygenElement.textContent = Math.round(oxygen);
+        if (oxygen <= 0) {
+          isGameOver = true;
+          endgame.style.display = "block";
+          window.cancelAnimationFrame(raf);
+          if (soundCount == 0) {
+            new Audio(src = "Death.mp3").play();
+            soundCount++;
+          }
+        }
         if (bird.x >= canvas.width)
         {
             new Audio(src = "Point.mp3").play();
@@ -162,15 +203,22 @@ function gameLoop() {
             score++;
             scoreElement.textContent = score;
         }
-    }
-    if (bird.y >= 930 || inDanger()) {
-        isGameOver = true;
-        endgame.style.display = "block";
-        window.cancelAnimationFrame(raf);
-        if(soundCount == 0)
-        {
-            new Audio(src = "Death.mp3").play();
-            soundCount++;
+        if (bird.y >= 930 || inDanger()) {
+            isGameOver = true;
+            endgame.style.display = "block";
+            window.cancelAnimationFrame(raf);
+            attempts++;
+            sessionStorage.setItem("attempts", attempts);
+            if(score > highScore)
+            {
+                highScore = score;
+                sessionStorage.setItem("numHighScore", highScore);
+            }
+            if(soundCount == 0)
+            {
+                new Audio(src = "Death.mp3").play();
+                soundCount++;
+            }
         }
     }
     raf = window.requestAnimationFrame(gameLoop);
@@ -219,11 +267,16 @@ foregroundPicture.src = "foreground.jpg";
 let bird = new Bird(10,300,80,80);
 bird.draw();
 
-let firstPipeGoingUp = new PipeUp(Math.random() * 800 + 200, Math.random() * 800 + 100, 100, 800);
+let firstPipeGoingUp = new PipeUp(Math.random() * 800 + 300, Math.random() * 800 + 100, 100, 800);
 let firstPipeGoingDown = new PipeDown(firstPipeGoingUp.x, firstPipeGoingUp.y - 800 - pipeGap, 100, 800);
 
-let secondPipeGoingUp = new PipeUp(Math.random() * 400 + 200 + firstPipeGoingUp.x, Math.random() * 500 + 500, 100, 800);
+let secondPipeGoingUp = new PipeUp(Math.random() * 400 + 400 + firstPipeGoingUp.x, Math.random() * 500 + 500, 100, 800);
 let secondPipeGoingDown = new PipeDown(secondPipeGoingUp.x, secondPipeGoingUp.y - 800 - pipeGap, 100, 800);
+
+if(secondPipeGoingUp.x >= canvas.width)
+{
+    resetPipe();
+}
 
 let foreground = new Foreground(0, 930, 2000, 100);
 foreground.draw();
