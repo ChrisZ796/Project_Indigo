@@ -247,6 +247,8 @@ function gameLoop() {
             bird.x = 0;
             score++;
             scoreElement.textContent = score;
+            oxygenDeclare = new Oxygen(Math.random() * (secondPipeGoingDown.x - firstPipeGoingUp.x) + firstPipeGoingUp.x, Math.random() * (secondPipeGoingDown.y - firstPipeGoingUp.y) + firstPipeGoingUp.y +790, 60,60);
+            oxygenDeclare.draw();
         }
 
         if (bird.y >= 930 || inDanger()) {
