@@ -26,7 +26,6 @@ const oxygenReplenishAmount = 40; // Adjust this value to control how much oxyge
 scoreElement.textContent = score;
 let highScore = 0;
 let attempts = Number(localStorage.getItem("attempts"));
-scoreElement.textContent = score;
 
 class Bird {
     constructor(x, y, width, height) {
@@ -149,6 +148,7 @@ function resetPipe(){
 
 
 function gameLoop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (!isGameOver && gameIsRunning) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         bird.x += 2 + score/5 + windSpeed;
@@ -193,6 +193,14 @@ function gameLoop() {
           if (soundCount == 0) {
             new Audio(src = "Death.mp3").play();
             soundCount++;
+            }
+          }
+          if (bird.x >= canvas.width) {
+            new Audio(src = "Point.mp3").play();
+            resetPipe();
+            bird.x = 0;
+            score++;
+            scoreElement.textContent = score;
           }
         }
         if (bird.x >= canvas.width)
@@ -250,6 +258,15 @@ function inDanger()
     {
         return false;
     }
+    if (bird.x > firstPipeGoingUp.x - 50 && bird.x < firstPipeGoingUp.x + 100 &&
+        bird.y > firstPipeGoingUp.y - 50 && bird.y < firstPipeGoingUp.y + 800 - pipeGap) {
+            firstPipeGoingUp.isPassed = true;
+        }
+    
+    if (bird.x > secondPipeGoingUp.x - 50 && bird.x < secondPipeGoingUp.x + 100 &&
+        bird.y > secondPipeGoingUp.y - 50 && bird.y < secondPipeGoingUp.y + 800 - pipeGap) {
+            secondPipeGoingUp.isPassed = true;
+        }
 }
 
 let birdImage = new Image();
