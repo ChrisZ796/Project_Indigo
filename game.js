@@ -15,6 +15,8 @@ ctx.drawImage(gifImage, 10, 10);
 document.addEventListener("keydown",jump,false);
 let isGameOver = false;
 let gravity = 0.05;
+let windSpeed = 0;
+let hasOxygen = false;
 let raf;
 let endgame = document.getElementById("endGame");
 endgame.style.display = "none";
@@ -40,6 +42,10 @@ oxygenGifImage.src = "oxygen.gif";
 let oxygenGifFrames = 0; // Counter to control the oxygen GIF frames
 const oxygenDecreaseRate = 0.07; // Adjust this value to control the oxygen decrease rate
 const oxygenReplenishAmount = 40; // Adjust this value to control how much oxygen is replenished when the bird passes through a gap
+scoreElement.textContent = score;
+let highScore = 0;
+let attempts = Number(localStorage.getItem("attempts"));
+let currentPlanet = localStorage.getItem("currentPlanet");
 scoreElement.textContent = score;
 
 class Bird {
@@ -143,6 +149,7 @@ function jump(event){
         text.style.display = "none";
     }
     if (key == "e"){
+        document.getElementById("musicTrack").play();
         isGameOver = false;
         gameIsRunning = false;
         bird.reset();
@@ -154,26 +161,33 @@ function jump(event){
         scoreElement.textContent = 0;
         endgame.style.display =  "none";
         text.style.display = "block";
+        oxygen += oxygenReplenishAmount;
     }
 
 }
 
 function resetPipe(){
-    firstPipeGoingUp.x = Math.random() * 800 + 200;
+    firstPipeGoingUp.x = Math.random() * 800 + 300;
     firstPipeGoingUp.y = Math.random() * 800 + 100;
     firstPipeGoingDown.x = firstPipeGoingUp.x;
     firstPipeGoingDown.y = firstPipeGoingUp.y - 800 - pipeGap;
-    secondPipeGoingUp.x = Math.random() * 400 + 200 + firstPipeGoingUp.x;
+    secondPipeGoingUp.x = Math.random() * 400 + 400 + firstPipeGoingUp.x;
     secondPipeGoingUp.y = Math.random() * 500 + 500;
     secondPipeGoingDown.x = secondPipeGoingUp.x;
     secondPipeGoingDown.y = secondPipeGoingUp.y - 800 - pipeGap;
+    if(secondPipeGoingUp.x >= canvas.width)
+    {
+        resetPipe();
+    }
 }
 
 
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (!isGameOver && gameIsRunning) {
-        bird.x += 2 + score/5;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        initGame();
+        bird.x += 2 + score/5 + windSpeed;
         oxygen -= oxygenDecreaseRate;
 
         // Calculate rotation angle based on bird's velocity
@@ -192,30 +206,32 @@ function gameLoop() {
         secondPipeGoingDown.draw();
         foreground.draw();
         oxygenDeclare.draw();
-        
-        if (bird.x >= firstPipeGoingUp.x + firstPipeGoingUp.width && !firstPipeGoingUp.isPassed) {
+        if (bird.x >= firstPipeGoingUp.x && bird.x <= firstPipeGoingUp.x + firstPipeGoingUp.width) {
             // Replenish oxygen when the bird passes through the gap
             firstPipeGoingUp.isPassed = true;
             oxygen += oxygenReplenishAmount;
         }
-        
-        if (bird.x >= secondPipeGoingUp.x + secondPipeGoingUp.width && !secondPipeGoingUp.isPassed) {
+        if (bird.x >= secondPipeGoingUp.x && bird.x <= secondPipeGoingUp.x + secondPipeGoingUp.width) {
             // Replenish oxygen when the bird passes through the gap
             secondPipeGoingUp.isPassed = true;
             oxygen += oxygenReplenishAmount;
         }
-          oxygen = Math.max(0, Math.min(100, oxygen));
-          oxygenElement.textContent = Math.round(oxygen);
-          if (oxygen <= 0) {
-            isGameOver = true;
-            endgame.style.display = "block";
-            window.cancelAnimationFrame(raf);
-            if (soundCount == 0) {
-              new Audio(src = "Death.mp3").play();
-              soundCount++;
+        else
+        {
+            firstPipeGoingDown.isPassed = false;
+            secondPipeGoingUp.isPassed = false;
+        }
+        oxygen = Math.max(0, Math.min(100, oxygen));
+        oxygenElement.textContent = Math.round(oxygen);
+        if (oxygen <= 0) {
+          isGameOver = true;
+          endgame.style.display = "block";
+          window.cancelAnimationFrame(raf);
+          if (soundCount == 0) {
+            new Audio(src = "Death.mp3").play();
+            soundCount++;
             }
           }
-      
           if (bird.x >= canvas.width) {
             new Audio(src = "Point.mp3").play();
             resetPipe();
@@ -233,26 +249,25 @@ function gameLoop() {
             scoreElement.textContent = score;
         }
 
-    if (bird.y >= 930 || inDanger()) {
-        isGameOver = true;
-        endgame.style.display = "block";
-        window.cancelAnimationFrame(raf);
-        if(soundCount == 0)
-        {
-            new Audio(src = "Death.mp3").play();
-            soundCount++;
-        }
+        if (bird.y >= 930 || inDanger()) {
+            isGameOver = true;
+            endgame.style.display = "block";
+            window.cancelAnimationFrame(raf);
+            document.getElementById("musicTrack").pause();
+            attempts++;
+            sessionStorage.setItem("attempts", attempts);
+            if(score > highScore)
+            {
+                highScore = score;
+                sessionStorage.setItem("numHighScore", highScore);
+            }
+            if(soundCount == 0)
+            {
+                new Audio(src = "Death.mp3").play();
+                soundCount++;
+            }
     }
-    // if (oxygenGifFrames >= 30 && Math.random() < 0.1) {
-    //     var x = Math.random() * (secondPipeGoingDown.x - firstPipeGoingUp.x) + firstPipeGoingUp.x;
-    //     var y = Math.random() * (secondPipeGoingDown.y - firstPipeGoingUp.y) + firstPipeGoingUp.y + 800;
-    //     ctx.drawImage(oxygenGifImage, x, y, 50, 50);
-    //     oxygenGifFrames = 0; // Reset the frame counter
-    //   }
-    
-    // oxygenGifFrames++;
     raf = window.requestAnimationFrame(gameLoop);
-
 }
 
 function birdDrop(){
@@ -292,6 +307,36 @@ function inDanger()
         }
 }
 
+function initGame()
+{
+    let background;
+    if(currentPlanet == "EARTH")
+    {
+        document.getElementById("canvas").style.backgroundImage = "url('earthBackdrop.jpg')";
+        gravity = 0.05;
+        windSpeed = 0;
+    }
+    else if(currentPlanet == "MOON")
+    {
+        document.getElementById("canvas").style.backgroundImage = "url('Moon Landscape.png')";
+        gravity = 0.02;
+        windSpeed = -0.5;
+    }
+    else if(currentPlanet == "ARGONIA")
+    {
+        document.getElementById("canvas").style.backgroundImage = "url('Argonia Landscape.jpg')";
+        gravity = 0.1;
+        windSpeed = -1;
+    }
+    else if(currentPlanet == "JUBILEE")
+    {
+        document.getElementById("canvas").style.backgroundImage = "url('Jubilee Landscape.jpg')";
+        gravity = 0.04;
+        windSpeed = 2;
+    }
+}
+
+
 let birdImage = new Image();
 birdImage.src = "icon.png";
 
@@ -302,19 +347,25 @@ let downPipeImage = new Image();
 downPipeImage.src = "birdPipeGoingDown.png";
 
 let foregroundPicture = new Image();
-foregroundPicture.src = "foreground.jpg";
+foregroundPicture.src = "foregroundEarth.jpg";
 
 let bird = new Bird(10,300,80,80);
 bird.draw();
 
-let firstPipeGoingUp = new PipeUp(Math.random() * 800 + 200, Math.random() * 800 + 100, 100, 800);
+let firstPipeGoingUp = new PipeUp(Math.random() * 800 + 300, Math.random() * 800 + 100, 100, 800);
 let firstPipeGoingDown = new PipeDown(firstPipeGoingUp.x, firstPipeGoingUp.y - 800 - pipeGap, 100, 800);
 
-let secondPipeGoingUp = new PipeUp(Math.random() * 400 + 200 + firstPipeGoingUp.x, Math.random() * 500 + 500, 100, 800);
+let secondPipeGoingUp = new PipeUp(Math.random() * 400 + 400 + firstPipeGoingUp.x, Math.random() * 500 + 500, 100, 800);
 let secondPipeGoingDown = new PipeDown(secondPipeGoingUp.x, secondPipeGoingUp.y - 800 - pipeGap, 100, 800);
+
+if(secondPipeGoingUp.x >= canvas.width)
+{
+    resetPipe();
+}
 
 let foreground = new Foreground(0, 930, 2000, 100);
 let oxygenDeclare = new Oxygen(Math.random() * (secondPipeGoingDown.x - firstPipeGoingUp.x) + firstPipeGoingUp.x, Math.random() * (secondPipeGoingDown.y - firstPipeGoingUp.y) + firstPipeGoingUp.y +790, 60,60);
 foreground.draw();
 
+initGame();
 gameLoop();

@@ -3,16 +3,19 @@ let startButton = document.getElementById("start");
 let statPage = document.getElementById("stats");
 let currentTrack = new Audio("Castlevania-VampireKiller.ogg");
 let distance = 0;
-let coins = 0;
 let attempts = 0;
+
+let numHighScore = Number(sessionStorage.getItem("numHighScore"));
+let numAttempt = Number(sessionStorage.getItem("attempts"));
 
 let distanceStat = document.getElementById("distance")
 let coinsStat = document.getElementById("coins")
 let attemptsStat = document.getElementById("attempts")
 
-distanceStat.textContent = distance;
-coinsStat.textContent = coins;
-attemptsStat.textContent = attempts;
+localStorage.setItem("attempts", Number(numAttempt));
+
+distanceStat.textContent = numHighScore;
+attemptsStat.textContent = numAttempt;
 // event listener for the start button to go to the game mode
 startButton.addEventListener("click", hideElements, false);
 statPage.addEventListener("click", openStats, false);
@@ -33,6 +36,8 @@ document.getElementById("EARTH").addEventListener("click", changePlanets("EARTH"
 document.getElementById("MOON").addEventListener("click", changePlanets("MOON"), false);
 document.getElementById("ARGONIA").addEventListener("click", changePlanets("ARGONIA"), false);
 document.getElementById("JUBILEE").addEventListener("click", changePlanets("JUBILEE"), false);
+
+localStorage.setItem("currentPlanet", currentPlanet);
 
 document.getElementById("trackON").style.display = "none";
 
@@ -134,10 +139,6 @@ function raiseUpElementbyID(elementID) {
     }
 }
 
-function playAudio(url) {
-    new Audio(url).play();
-  }
-
 function changePlanets(planet)
 {
     document.getElementById(currentPlanet).className = "";
@@ -150,10 +151,55 @@ function toggleSoundIcon()
     {
         document.getElementById("trackON").style.display = "inline";
         document.getElementById("trackOFF").style.display = "none";
+        document.getElementById("musicTrack").play();
     }
     else if(document.getElementById("trackON").style.display == "inline")
     {
         document.getElementById("trackON").style.display = "none";
         document.getElementById("trackOFF").style.display = "inline";
+        document.getElementById("musicTrack").pause();
     }
+}
+function changeEarth() {
+    currentPlanet = "EARTH";
+    localStorage.setItem("currentPlanet", currentPlanet);
+    document.getElementById("EARTH").style.backgroundColor = 'unset';
+    document.getElementById("MOON").style.backgroundColor = 'unset';
+    document.getElementById("JUBILEE").style.backgroundColor = 'unset';
+    document.getElementById("ARGONIA").style.backgroundColor = 'unset';
+    document.getElementById("EARTH").style.backgroundColor = 'gray';
+    document.body.style.backgroundImage = "url('earthBackdrop.jpg')";
+}
+
+function changeMoon() {
+    currentPlanet = "MOON";
+    localStorage.setItem("currentPlanet", currentPlanet);
+    document.getElementById("EARTH").style.backgroundColor = 'unset';
+    document.getElementById("MOON").style.backgroundColor = 'unset';
+    document.getElementById("JUBILEE").style.backgroundColor = 'unset';
+    document.getElementById("ARGONIA").style.backgroundColor = 'unset';
+    document.getElementById("MOON").style.backgroundColor = 'gray';
+    document.body.style.backgroundImage = "url('Moon Landscape.png')";
+}
+
+function changeJubilee() {
+    currentPlanet = "JUBILEE";
+    localStorage.setItem("currentPlanet", currentPlanet);
+    document.getElementById("EARTH").style.backgroundColor = 'unset';
+    document.getElementById("MOON").style.backgroundColor = 'unset';
+    document.getElementById("JUBILEE").style.backgroundColor = 'unset';
+    document.getElementById("ARGONIA").style.backgroundColor = 'unset';
+    document.getElementById("JUBILEE").style.backgroundColor = 'gray';
+    document.body.style.backgroundImage = "url('Jubilee Landscape.jpg')";
+}
+
+function changeArgonia() {
+    currentPlanet = "ARGONIA";
+    localStorage.setItem("currentPlanet", currentPlanet);
+    document.getElementById("EARTH").style.backgroundColor = 'unset';
+    document.getElementById("MOON").style.backgroundColor = 'unset';
+    document.getElementById("JUBILEE").style.backgroundColor = 'unset';
+    document.getElementById("ARGONIA").style.backgroundColor = 'unset';
+    document.getElementById("ARGONIA").style.backgroundColor = 'gray';
+    document.body.style.backgroundImage = "url('Argonia Landscape.jpg')";
 }
