@@ -98,7 +98,3 @@ span{
     display: flex;
     flex-wrap: wrap;
 }
-
-.selected {
-    background-color: grey;
-}

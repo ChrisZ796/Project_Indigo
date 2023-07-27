@@ -37,6 +37,8 @@ document.getElementById("MOON").addEventListener("click", changePlanets("MOON"),
 document.getElementById("ARGONIA").addEventListener("click", changePlanets("ARGONIA"), false);
 document.getElementById("JUBILEE").addEventListener("click", changePlanets("JUBILEE"), false);
 
+localStorage.setItem("currentPlanet", currentPlanet);
+
 document.getElementById("trackON").style.display = "none";
 
 let Earth = {
@@ -159,4 +161,47 @@ function toggleSoundIcon()
         document.getElementById("trackON").style.display = "none";
         document.getElementById("trackOFF").style.display = "inline";
     }
+}
+function changeEarth() {
+    currentPlanet = "EARTH";
+    localStorage.setItem("currentPlanet", currentPlanet);
+    document.getElementById("EARTH").style.backgroundColor = 'unset';
+    document.getElementById("MOON").style.backgroundColor = 'unset';
+    document.getElementById("JUBILEE").style.backgroundColor = 'unset';
+    document.getElementById("ARGONIA").style.backgroundColor = 'unset';
+    document.getElementById("EARTH").style.backgroundColor = 'gray';
+    document.body.style.backgroundImage = "url('earthBackdrop.jpg')";
+}
+
+function changeMoon() {
+    currentPlanet = "MOON";
+    localStorage.setItem("currentPlanet", currentPlanet);
+    document.getElementById("EARTH").style.backgroundColor = 'unset';
+    document.getElementById("MOON").style.backgroundColor = 'unset';
+    document.getElementById("JUBILEE").style.backgroundColor = 'unset';
+    document.getElementById("ARGONIA").style.backgroundColor = 'unset';
+    document.getElementById("MOON").style.backgroundColor = 'gray';
+    document.body.style.backgroundImage = "url('Moon Landscape.png')";
+}
+
+function changeJubilee() {
+    currentPlanet = "JUBILEE";
+    localStorage.setItem("currentPlanet", currentPlanet);
+    document.getElementById("EARTH").style.backgroundColor = 'unset';
+    document.getElementById("MOON").style.backgroundColor = 'unset';
+    document.getElementById("JUBILEE").style.backgroundColor = 'unset';
+    document.getElementById("ARGONIA").style.backgroundColor = 'unset';
+    document.getElementById("JUBILEE").style.backgroundColor = 'gray';
+    document.body.style.backgroundImage = "url('Jubilee Landscape.jpg')";
+}
+
+function changeArgonia() {
+    currentPlanet = "ARGONIA";
+    localStorage.setItem("currentPlanet", currentPlanet);
+    document.getElementById("EARTH").style.backgroundColor = 'unset';
+    document.getElementById("MOON").style.backgroundColor = 'unset';
+    document.getElementById("JUBILEE").style.backgroundColor = 'unset';
+    document.getElementById("ARGONIA").style.backgroundColor = 'unset';
+    document.getElementById("ARGONIA").style.backgroundColor = 'gray';
+    document.body.style.backgroundImage = "url('Argonia Landscape.jpg')";
 }
