@@ -4,6 +4,7 @@ let statPage = document.getElementById("stats");
 let currentTrack = new Audio("Castlevania-VampireKiller.ogg");
 let numHighScore = Number(sessionStorage.getItem("numHighScore"));
 let numAttempt = Number(sessionStorage.getItem("attempts"));
+let pipeGap = 300;
 
 let distanceStat = document.getElementById("distance");
 let coinsStat = document.getElementById("coins");
@@ -161,6 +162,8 @@ function toggleSoundIcon()
 }
 function changeEarth() {
     currentPlanet = "EARTH";
+    pipeGap = 300;
+    localStorage.setItem("pipeGap", pipeGap);
     localStorage.setItem("currentPlanet", currentPlanet);
     document.getElementById("EARTH").style.backgroundColor = 'unset';
     document.getElementById("MOON").style.backgroundColor = 'unset';
@@ -175,6 +178,8 @@ function changeEarth() {
 
 function changeMoon() {
     currentPlanet = "MOON";
+    pipeGap = 400;
+    localStorage.setItem("pipeGap", pipeGap);
     localStorage.setItem("currentPlanet", currentPlanet);
     document.getElementById("EARTH").style.backgroundColor = 'unset';
     document.getElementById("MOON").style.backgroundColor = 'unset';
@@ -189,6 +194,8 @@ function changeMoon() {
 
 function changeJubilee() {
     currentPlanet = "JUBILEE";
+    pipeGap = 500;
+    localStorage.setItem("pipeGap", pipeGap);
     localStorage.setItem("currentPlanet", currentPlanet);
     document.getElementById("EARTH").style.backgroundColor = 'unset';
     document.getElementById("MOON").style.backgroundColor = 'unset';
@@ -203,6 +210,8 @@ function changeJubilee() {
 
 function changeArgonia() {
     currentPlanet = "ARGONIA";
+    pipeGap = 100;
+    localStorage.setItem("pipeGap", pipeGap);
     localStorage.setItem("currentPlanet", currentPlanet);
     document.getElementById("EARTH").style.backgroundColor = 'unset';
     document.getElementById("MOON").style.backgroundColor = 'unset';
