@@ -129,6 +129,8 @@ function jump(event){
         scoreElement.textContent = 0;
         endgame.style.display =  "none";
         text.style.display = "block";
+        attempts++;
+        sessionStorage.setItem("attempts", attempts);
         oxygen += oxygenReplenishAmount;
     }
 
@@ -220,8 +222,6 @@ function gameLoop() {
             endgame.style.display = "block";
             window.cancelAnimationFrame(raf);
             document.getElementById("musicTrack").pause();
-            attempts++;
-            sessionStorage.setItem("attempts", attempts);
             if(score > highScore)
             {
                 highScore = score;
