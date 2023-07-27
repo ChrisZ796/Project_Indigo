@@ -2,7 +2,6 @@
 let startButton = document.getElementById("start");
 let statPage = document.getElementById("stats");
 let currentTrack = new Audio("Castlevania-VampireKiller.ogg");
-let trackPlaying = false;
 let distance = 0;
 let coins = 0;
 let attempts = 0;
@@ -147,16 +146,14 @@ function changePlanets(planet)
 
 function toggleSoundIcon()
 {
-    if(trackPlaying)
+    if(document.getElementById("trackON").style.display == "none")
     {
-        document.getElementById("trackON").display = "none";
-        document.getElementById("trackOFF").display = "inline";
-        trackPlaying == false;
+        document.getElementById("trackON").style.display = "inline";
+        document.getElementById("trackOFF").style.display = "none";
     }
-    else if(!trackPlaying)
+    else if(document.getElementById("trackON").style.display == "inline")
     {
-        document.getElementById("trackOFF").display = "none";
-        document.getElementById("trackON").display = "inline";
-        trackPlaying == true;
+        document.getElementById("trackON").style.display = "none";
+        document.getElementById("trackOFF").style.display = "inline";
     }
 }
