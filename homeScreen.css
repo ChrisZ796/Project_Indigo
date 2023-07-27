@@ -14,6 +14,7 @@ p{
     font-family: "classicText";
     padding: 10px;
     font-size: 6vh;
+    display: inline;
 }
 h1{
     text-align: center;
@@ -61,12 +62,12 @@ body{
 }
 #settingsBar{
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(1,1fr);
     grid-template-areas: 
-        "ti ti ti ti"
-        "pl gs ox ws"
-        "pl gs ox ws"
-        "pl gs ox ws";
+        "ti"
+        "pl"
+        "pl"
+        "pl";
     font-family: classicText;
     font-size: 50px;
     display: none;
@@ -77,34 +78,14 @@ span{
 #planets{
     grid-area: pl;
     display: flex;
-    flex-direction: column;
     justify-content: space-around;
     margin: auto;
 }
-.gravity{
-    grid-area: gs;
+/* .trait{
+    font-family:sans-serif;
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    grid-template-columns: 1fr;
-    margin: auto;
-}
-.oxygen{
-    grid-area: ox;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    grid-template-columns: 1fr;
-    margin: auto;
-}
-.wind{
-    grid-area: ws;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    grid-template-columns: 1fr;
-    margin: auto;
-}
+    font-size: 10px;
+} */
 #settingTitle{
     grid-area: ti;
     margin: auto;
@@ -121,3 +102,6 @@ span{
     flex-wrap: wrap;
 }
 
+.selected {
+    background-color: grey;
+}

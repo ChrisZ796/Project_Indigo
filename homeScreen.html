@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id="mainContainer">
-        <h1 id="header" onclick = "playAudio('Castlevania-VampireKiller.ogg')">Flappy Bird</h1>
+        <h1 id="header" onclick = "playAudio('Castlevania-VampireKiller.ogg'); toggleSoundIcon()">Flappy Bird <img width = "50px" id = "trackOFF" src = "Sound Icon OFF.png" alt = "Sound Icon OFF"><img width = "50px" id = "trackON" src = "Sound Icon ON.png" alt = "Sound Icon ON"></h1>
         <h2 id="start"> <a href="flappyGame.html" style="text-decoration: none; color: black;">START</a></h2>
         <h2 id="stats">STATISTICS</h2>
         <h2 id="credits">CREDITS</h2>
@@ -34,38 +34,43 @@
     <div id="settingsBar">
         <h1 id="settingTitle">PLANET SELECTION</h1>
         <div id="planets">
-            <h2 id="earth">Earth</h2>
-            <h2 id="moon">Moon</h2>
-            <h2 id="argonia">Argonia</h2>
-            <h2 id="jubilee">Jubilee</h2>
+            <div id = "EARTH">
+                <h2 id="earth">Earth</h2>
+                <p>Gravity strength:          </p> 
+                <p class = "trait" id="earthGravity">Normal</p>
+                <p>Has oxygen:            </p> 
+                <p class = "trait" id="earthOxygen">Yes</p>
+                <p>Wind speed:            </p>
+                <p class = "trait" id="earthWind">Normal</p>
+            </div>
+            <div id = "MOON">
+                <h2 id="moon">Moon</h2>
+                <p>Gravity strength:          </p> 
+                <p class = "trait" id="moonGravity">Low</p>
+                <p>Has oxygen:           </p> 
+                <p class = "trait" id="moonOxygen">No</p>
+                <p>Wind speed:         </p>
+                <p class = "trait" id="moonWind">Slow</p>
+            </div>
+            <div id = "JUBILEE">
+                <h2 id="jubilee">Jubilee</h2>
+                <p>Gravity strength:           </p> 
+                <p class = "trait" id="jubileeGravity">Low</p>
+                <p>Has oxygen:         </p> 
+                <p class = "trait" id="jubileeOxygen">Yes</p>
+                <p>Wind speed:         </p>
+                <p class = "trait" id="jubileeWind">Fast</p>
+            </div>
+            <div id = "ARGONIA">
+                <h2 id="argonia">Argonia</h2>
+                <p>Gravity strength:           </p> 
+                <p class = "trait" id="argoniaGravity">High</p>
+                <p>Has oxygen:         </p> 
+                <p class = "trait" id="argoniaOxygen">No</p>
+                <p>Wind speed:         </p>
+                <p class = "trait" id="argoniaWind">Fast</p>
+            </div>
         </div>
-        <div id="description">
-            <!-- speed the bird fall -->
-            <p>Gravity strength: <span class="gravity"></span></p>     
-            <!-- height of one jump -->
-            <p>Has oxygen: <span class="oxygen"></span></p>
-            <!-- speed of the pillars(or the bird if you want to say it this way) -->
-            <p>Wind speed: <span class="wind"></span></p>
-
-            <p>Gravity strength: <span class="gravity"></span></p>     
-            <!-- height of one jump -->
-            <p>Has oxygen: <span class="oxygen"></span></p>
-            <!-- speed of the pillars(or the bird if you want to say it this way) -->
-            <p>Wind speed: <span class="wind"></span></p>
-
-            <p>Gravity strength: <span class="gravity"></span></p>     
-            <!-- height of one jump -->
-            <p>Has oxygen: <span class="oxygen"></span></p>
-            <!-- speed of the pillars(or the bird if you want to say it this way) -->
-            <p>Wind speed: <span class="wind"></span></p>
-
-            <p>Gravity strength: <span class="gravity"></span></p>     
-            <!-- height of one jump -->
-            <p>Has oxygen: <span class="oxygen"></span></p>
-            <!-- speed of the pillars(or the bird if you want to say it this way) -->
-            <p>Wind speed: <span class="wind"></span></p>
-        </div>
-        
     </div>
     <script src = "gameScript.js"></script>
 </body>

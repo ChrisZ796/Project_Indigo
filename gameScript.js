@@ -28,6 +28,14 @@ document.getElementById("settings").addEventListener("click", openSettings, fals
 
 document.getElementById("settingTitle").addEventListener("click", backToMain, false);
 
+let currentPlanet = "EARTH";
+document.getElementById("EARTH").addEventListener("click", changePlanets("EARTH"), false);
+document.getElementById("MOON").addEventListener("click", changePlanets("MOON"), false);
+document.getElementById("ARGONIA").addEventListener("click", changePlanets("ARGONIA"), false);
+document.getElementById("JUBILEE").addEventListener("click", changePlanets("JUBILEE"), false);
+
+document.getElementById("trackON").style.display = "none";
+
 let Earth = {
     gravStrength: "Normal",
     windSpeed: "Normal",
@@ -130,3 +138,22 @@ function playAudio(url) {
     new Audio(url).play();
   }
 
+function changePlanets(planet)
+{
+    document.getElementById(currentPlanet).className = "";
+    document.getElementById(planet).className = "selected";
+}
+
+function toggleSoundIcon()
+{
+    if(document.getElementById("trackON").style.display == "none")
+    {
+        document.getElementById("trackON").style.display = "inline";
+        document.getElementById("trackOFF").style.display = "none";
+    }
+    else if(document.getElementById("trackON").style.display == "inline")
+    {
+        document.getElementById("trackON").style.display = "none";
+        document.getElementById("trackOFF").style.display = "inline";
+    }
+}

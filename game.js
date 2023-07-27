@@ -137,7 +137,7 @@ function resetPipe(){
 function gameLoop() {
     if (!isGameOver && gameIsRunning) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        bird.x += 2;
+        bird.x += 2 + score/5;
 
         // Calculate rotation angle based on bird's velocity
         //bird.rotation = Math.atan2(bird.dy, 2) + Math.PI / 2;
