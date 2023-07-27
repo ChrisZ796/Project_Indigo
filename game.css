@@ -13,6 +13,7 @@
     background-size: contain;
     padding: 0;
     overflow: hidden;
+    background-repeat: no-repeat;
 }
 h2 {
     position: absolute;

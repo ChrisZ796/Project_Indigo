@@ -168,9 +168,9 @@ function resetPipe(){
     secondPipeGoingDown.x = secondPipeGoingUp.x;
     secondPipeGoingDown.y = secondPipeGoingUp.y - 800 - pipeGap;
     firstOxygenBubble.x = firstPipeGoingUp.x;
-    firstOxygenBubble.y = firstPipeGoingUp.y - (Math.random() * 200 + 50);
+    firstOxygenBubble.y = firstPipeGoingUp.y - (Math.random() * 200 + 30);
     secondOxygenBubble.x = secondPipeGoingUp.x;
-    secondOxygenBubble.y = secondPipeGoingUp.y - (Math.random() * 200 + 50);
+    secondOxygenBubble.y = secondPipeGoingUp.y - (Math.random() * 200 + 30);
     if(secondPipeGoingUp.x >= canvas.width)
     {
         resetPipe();
@@ -204,6 +204,8 @@ function gameLoop() {
         if(hasOxygen)
         {
             oxygen = 100;
+            firstOxygenBubble.x = -500;
+            secondOxygenBubble.x = -500;
         }
         else(!hasOxygen)
         {
@@ -254,7 +256,7 @@ function gameLoop() {
             score++;
             scoreElement.textContent = score;
         }
-        if (bird.y >= 640 || inDanger()) {
+        if (bird.y >= 930 || inDanger()) {
             isGameOver = true;
             endgame.style.display = "block";
             window.cancelAnimationFrame(raf);
@@ -367,6 +369,8 @@ function initGame()
     }
 }
 
+let foregroundPicture = new Image();
+
 initGame();
 
 let birdImage = new Image();
@@ -377,8 +381,6 @@ pipeImage.src = "birdPipe.png";
 
 let downPipeImage = new Image();
 downPipeImage.src = "birdPipeGoingDown.png";
-
-let foregroundPicture = new Image();
 
 let oxyBubble = new Image();
 oxyBubble.src = "Oxy Bubble.gif";
@@ -400,13 +402,15 @@ if(hasOxygen)
     firstOxygenBubble.y = -100;
     secondOxygenBubble.x = -100;
     secondOxygenBubble.y = -100;
+    firstOxygenBubble.draw();
+    secondOxygenBubble.draw();
 }
 if(secondPipeGoingUp.x >= canvas.width)
 {
     resetPipe();
 }
 
-let foreground = new Foreground(0, 700, 2000, 100);
+let foreground = new Foreground(0, 930, 2000, 100);
 foreground.draw();
 
 checkColor();
