@@ -26,6 +26,7 @@ const oxygenReplenishAmount = 40; // Adjust this value to control how much oxyge
 scoreElement.textContent = score;
 let highScore = 0;
 let attempts = Number(localStorage.getItem("attempts"));
+let currentPlanet = localStorage.getItem("currentPlanet");
 scoreElement.textContent = score;
 
 class Bird {
@@ -151,6 +152,7 @@ function resetPipe(){
 function gameLoop() {
     if (!isGameOver && gameIsRunning) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        initGame();
         bird.x += 2 + score/5 + windSpeed;
         oxygen -= oxygenDecreaseRate;
 
@@ -252,6 +254,35 @@ function inDanger()
     }
 }
 
+function initGame()
+{
+    let background;
+    if(currentPlanet == "EARTH")
+    {
+        document.getElementById("canvas").style.backgroundImage = "url('earthBackdrop.jpg')";
+        gravity = 0.05;
+        windSpeed = 0;
+    }
+    else if(currentPlanet == "MOON")
+    {
+        document.getElementById("canvas").style.backgroundImage = "url('Moon Landscape.png')";
+        gravity = 0.02;
+        windSpeed = -0.5;
+    }
+    else if(currentPlanet == "ARGONIA")
+    {
+        document.getElementById("canvas").style.backgroundImage = "url('Argonia Landscape.jpg')";
+        gravity = 0.1;
+        windSpeed = -1;
+    }
+    else if(currentPlanet == "JUBILEE")
+    {
+        document.getElementById("canvas").style.backgroundImage = "url('Jubilee Landscape.jpg')";
+        gravity = 0.04;
+        windSpeed = 2;
+    }
+}
+
 let birdImage = new Image();
 birdImage.src = "icon.png";
 
@@ -262,7 +293,7 @@ let downPipeImage = new Image();
 downPipeImage.src = "birdPipeGoingDown.png";
 
 let foregroundPicture = new Image();
-foregroundPicture.src = "foreground.jpg";
+foregroundPicture.src = "foregroundEarth.jpg";
 
 let bird = new Bird(10,300,80,80);
 bird.draw();
@@ -281,4 +312,5 @@ if(secondPipeGoingUp.x >= canvas.width)
 let foreground = new Foreground(0, 930, 2000, 100);
 foreground.draw();
 
+initGame();
 gameLoop();
