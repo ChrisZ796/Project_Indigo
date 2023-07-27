@@ -10,6 +10,7 @@
 }
 #canvas{
     background-image: url("earthBackdrop.jpg");
+    background-size: contain;
     padding: 0;
     overflow: hidden;
 }
