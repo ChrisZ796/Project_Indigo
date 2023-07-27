@@ -31,11 +31,12 @@ let oxygenElement = document.getElementById("oxygenValue"); // Select the oxygen
 let oxygen = 100;
 let oxygenGifImage = new Image();
 oxygenGifImage.src = "oxygen.gif";
-oxygenGifImage.width = 50;
-oxygenGifImage.height = 50;
-oxygenGifImage.onload = function() {
-    gameLoop();
-  };
+// ctx.drawImage(oxygenGifImage,)
+// oxygenGifImage.width = 50;
+// oxygenGifImage.height = 50;
+// oxygenGifImage.onload = function() {
+//     gameLoop();
+//   };
 let oxygenGifFrames = 0; // Counter to control the oxygen GIF frames
 const oxygenDecreaseRate = 0.07; // Adjust this value to control the oxygen decrease rate
 const oxygenReplenishAmount = 40; // Adjust this value to control how much oxygen is replenished when the bird passes through a gap
@@ -62,6 +63,19 @@ class Bird {
         this.y = 300;
         this.dy = 0;
         isGameOver = false;
+    }
+}
+
+class Oxygen
+{
+    constructor(x,y,width,height){
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+    draw(){
+        ctx.drawImage(oxygenGifImage,this.x,this.y,this.width,this.height);
     }
 }
 
@@ -177,6 +191,7 @@ function gameLoop() {
         secondPipeGoingUp.draw();
         secondPipeGoingDown.draw();
         foreground.draw();
+        oxygenDeclare.draw();
         
         if (bird.x >= firstPipeGoingUp.x + firstPipeGoingUp.width && !firstPipeGoingUp.isPassed) {
             // Replenish oxygen when the bird passes through the gap
@@ -228,14 +243,14 @@ function gameLoop() {
             soundCount++;
         }
     }
-    if (oxygenGifFrames >= 30 && Math.random() < 0.1) {
-        var x = Math.random() * (secondPipeGoingDown.x - firstPipeGoingUp.x) + firstPipeGoingUp.x;
-        var y = Math.random() * (secondPipeGoingDown.y - firstPipeGoingUp.y) + firstPipeGoingUp.y + 800;
-        ctx.drawImage(oxygenGifImage, x, y, 50, 50);
-        oxygenGifFrames = 0; // Reset the frame counter
-      }
+    // if (oxygenGifFrames >= 30 && Math.random() < 0.1) {
+    //     var x = Math.random() * (secondPipeGoingDown.x - firstPipeGoingUp.x) + firstPipeGoingUp.x;
+    //     var y = Math.random() * (secondPipeGoingDown.y - firstPipeGoingUp.y) + firstPipeGoingUp.y + 800;
+    //     ctx.drawImage(oxygenGifImage, x, y, 50, 50);
+    //     oxygenGifFrames = 0; // Reset the frame counter
+    //   }
     
-    oxygenGifFrames++;
+    // oxygenGifFrames++;
     raf = window.requestAnimationFrame(gameLoop);
 
 }
@@ -299,6 +314,7 @@ let secondPipeGoingUp = new PipeUp(Math.random() * 400 + 200 + firstPipeGoingUp.
 let secondPipeGoingDown = new PipeDown(secondPipeGoingUp.x, secondPipeGoingUp.y - 800 - pipeGap, 100, 800);
 
 let foreground = new Foreground(0, 930, 2000, 100);
+let oxygenDeclare = new Oxygen(Math.random() * (secondPipeGoingDown.x - firstPipeGoingUp.x) + firstPipeGoingUp.x, Math.random() * (secondPipeGoingDown.y - firstPipeGoingUp.y) + firstPipeGoingUp.y +790, 60,60);
 foreground.draw();
 
 gameLoop();
