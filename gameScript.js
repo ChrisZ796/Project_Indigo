@@ -3,16 +3,19 @@ let startButton = document.getElementById("start");
 let statPage = document.getElementById("stats");
 let currentTrack = new Audio("Castlevania-VampireKiller.ogg");
 let distance = 0;
-let coins = 0;
 let attempts = 0;
+
+let numHighScore = Number(sessionStorage.getItem("numHighScore"));
+let numAttempt = Number(sessionStorage.getItem("attempts"));
 
 let distanceStat = document.getElementById("distance")
 let coinsStat = document.getElementById("coins")
 let attemptsStat = document.getElementById("attempts")
 
-distanceStat.textContent = distance;
-coinsStat.textContent = coins;
-attemptsStat.textContent = attempts;
+localStorage.setItem("attempts", Number(numAttempt));
+
+distanceStat.textContent = numHighScore;
+attemptsStat.textContent = numAttempt;
 // event listener for the start button to go to the game mode
 startButton.addEventListener("click", hideElements, false);
 statPage.addEventListener("click", openStats, false);

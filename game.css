@@ -70,3 +70,10 @@ h2{
     padding: 10px;
     font-size: 200%;
 }
+#oxygen {
+    position: absolute;
+    top: 100px;
+    left: 50px;
+    font-family: "classicText";
+    font-size: 200%;
+}
