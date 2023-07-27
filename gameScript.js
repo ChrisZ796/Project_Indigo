@@ -2,6 +2,7 @@
 let startButton = document.getElementById("start");
 let statPage = document.getElementById("stats");
 let currentTrack = new Audio("Castlevania-VampireKiller.ogg");
+let trackPlaying = false;
 let distance = 0;
 let coins = 0;
 let attempts = 0;
@@ -27,6 +28,14 @@ creditsButton.addEventListener("click", showCredits, false);
 document.getElementById("settings").addEventListener("click", openSettings, false);
 
 document.getElementById("settingTitle").addEventListener("click", backToMain, false);
+
+let currentPlanet = "EARTH";
+document.getElementById("EARTH").addEventListener("click", changePlanets("EARTH"), false);
+document.getElementById("MOON").addEventListener("click", changePlanets("MOON"), false);
+document.getElementById("ARGONIA").addEventListener("click", changePlanets("ARGONIA"), false);
+document.getElementById("JUBILEE").addEventListener("click", changePlanets("JUBILEE"), false);
+
+document.getElementById("trackON").style.display = "none";
 
 let Earth = {
     gravStrength: "Normal",
@@ -130,3 +139,24 @@ function playAudio(url) {
     new Audio(url).play();
   }
 
+function changePlanets(planet)
+{
+    document.getElementById(currentPlanet).className = "";
+    document.getElementById(planet).className = "selected";
+}
+
+function toggleSoundIcon()
+{
+    if(trackPlaying)
+    {
+        document.getElementById("trackON").display = "none";
+        document.getElementById("trackOFF").display = "inline";
+        trackPlaying == false;
+    }
+    else if(!trackPlaying)
+    {
+        document.getElementById("trackOFF").display = "none";
+        document.getElementById("trackON").display = "inline";
+        trackPlaying == true;
+    }
+}
