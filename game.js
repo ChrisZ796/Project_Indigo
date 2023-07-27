@@ -234,7 +234,7 @@ function inDanger()
     //Check the first set of pipes
     if(bird.x > firstPipeGoingUp.x - 50 && bird.x < firstPipeGoingUp.x + 100)
     {
-        if(bird.y > firstPipeGoingUp.y - 50 || bird.y < firstPipeGoingDown.y + 800)
+        if(bird.y > firstPipeGoingUp.y - 50 || bird.y < firstPipeGoingDown.y + 760)
         {
             return true;
         }
@@ -242,7 +242,7 @@ function inDanger()
     //Check the second set of pipes
     else if(bird.x > secondPipeGoingUp.x - 50 && bird.x < secondPipeGoingUp.x + 100)
     {
-        if(bird.y > secondPipeGoingUp.y - 50 || bird.y < secondPipeGoingDown.y + 800)
+        if(bird.y > secondPipeGoingUp.y - 50 || bird.y < secondPipeGoingDown.y + 760)
         {
             return true;
         }
