@@ -17,6 +17,10 @@ let soundCount = 0;
 let musicCount = 0;
 let scoreElement = document.getElementById("score");
 let score = 0;
+let oxygenElement = document.getElementById("oxygenValue"); // Select the oxygen display element
+let oxygen = 100;
+const oxygenDecreaseRate = 0.07; // Adjust this value to control the oxygen decrease rate
+const oxygenReplenishAmount = 40; // Adjust this value to control how much oxygen is replenished when the bird passes through a gap
 scoreElement.textContent = score;
 
 class Bird {
@@ -135,9 +139,10 @@ function resetPipe(){
 
 
 function gameLoop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (!isGameOver && gameIsRunning) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         bird.x += 2 + score/5;
+        oxygen -= oxygenDecreaseRate;
 
         // Calculate rotation angle based on bird's velocity
         //bird.rotation = Math.atan2(bird.dy, 2) + Math.PI / 2;
@@ -154,6 +159,38 @@ function gameLoop() {
         secondPipeGoingUp.draw();
         secondPipeGoingDown.draw();
         foreground.draw();
+        
+        if (bird.x >= firstPipeGoingUp.x + firstPipeGoingUp.width && !firstPipeGoingUp.isPassed) {
+            // Replenish oxygen when the bird passes through the gap
+            firstPipeGoingUp.isPassed = true;
+            oxygen += oxygenReplenishAmount;
+        }
+        
+        if (bird.x >= secondPipeGoingUp.x + secondPipeGoingUp.width && !secondPipeGoingUp.isPassed) {
+            // Replenish oxygen when the bird passes through the gap
+            secondPipeGoingUp.isPassed = true;
+            oxygen += oxygenReplenishAmount;
+        }
+          oxygen = Math.max(0, Math.min(100, oxygen));
+          oxygenElement.textContent = Math.round(oxygen);
+          if (oxygen <= 0) {
+            isGameOver = true;
+            endgame.style.display = "block";
+            window.cancelAnimationFrame(raf);
+            if (soundCount == 0) {
+              new Audio(src = "Death.mp3").play();
+              soundCount++;
+            }
+          }
+      
+          if (bird.x >= canvas.width) {
+            new Audio(src = "Point.mp3").play();
+            resetPipe();
+            bird.x = 0;
+            score++;
+            scoreElement.textContent = score;
+          }
+        }
         if (bird.x >= canvas.width)
         {
             new Audio(src = "Point.mp3").play();
@@ -162,7 +199,7 @@ function gameLoop() {
             score++;
             scoreElement.textContent = score;
         }
-    }
+
     if (bird.y >= 930 || inDanger()) {
         isGameOver = true;
         endgame.style.display = "block";
@@ -202,6 +239,15 @@ function inDanger()
     {
         return false;
     }
+    if (bird.x > firstPipeGoingUp.x - 50 && bird.x < firstPipeGoingUp.x + 100 &&
+        bird.y > firstPipeGoingUp.y - 50 && bird.y < firstPipeGoingUp.y + 800 - pipeGap) {
+            firstPipeGoingUp.isPassed = true;
+        }
+    
+    if (bird.x > secondPipeGoingUp.x - 50 && bird.x < secondPipeGoingUp.x + 100 &&
+        bird.y > secondPipeGoingUp.y - 50 && bird.y < secondPipeGoingUp.y + 800 - pipeGap) {
+            secondPipeGoingUp.isPassed = true;
+        }
 }
 
 let birdImage = new Image();
