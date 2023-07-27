@@ -22,6 +22,7 @@ let score = 0;
 let oxygenElement = document.getElementById("oxygenValue"); // Select the oxygen display element
 let oxygen = 100;
 
+pipeGap = Number(localStorage.getItem("pipeGap"));
 let setColor = Number(localStorage.getItem("colorChange"));
 let colorCollection = document.getElementsByTagName("h2");
 
@@ -129,7 +130,7 @@ function jump(event){
     let key = event.key;
     if (key == "ArrowUp"){
         if (musicCount == 0){
-            new Audio(src = "Castlevania-VampireKiller.ogg").play();
+            document.getElementById("musicTrack").play();
             musicCount++;
         }
         new Audio(src = "Flap.mp3").play();
