@@ -230,7 +230,7 @@ function gameLoop() {
         }
     }
     raf = window.requestAnimationFrame(gameLoop);
-}
+
 
 function birdDrop(){
     bird.dy = -3;
