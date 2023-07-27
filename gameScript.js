@@ -2,15 +2,14 @@
 let startButton = document.getElementById("start");
 let statPage = document.getElementById("stats");
 let currentTrack = new Audio("Castlevania-VampireKiller.ogg");
-let distance = 0;
-let attempts = 0;
-
 let numHighScore = Number(sessionStorage.getItem("numHighScore"));
 let numAttempt = Number(sessionStorage.getItem("attempts"));
 
-let distanceStat = document.getElementById("distance")
-let coinsStat = document.getElementById("coins")
-let attemptsStat = document.getElementById("attempts")
+let distanceStat = document.getElementById("distance");
+let coinsStat = document.getElementById("coins");
+let attemptsStat = document.getElementById("attempts");
+
+let colorDefine = 0;
 
 localStorage.setItem("attempts", Number(numAttempt));
 
@@ -169,6 +168,9 @@ function changeEarth() {
     document.getElementById("ARGONIA").style.backgroundColor = 'unset';
     document.getElementById("EARTH").style.backgroundColor = 'gray';
     document.body.style.backgroundImage = "url('earthBackdrop.jpg')";
+    document.body.style.color = "black";
+    colorDefine = 0;
+    localStorage.setItem("colorChange",colorDefine);
 }
 
 function changeMoon() {
@@ -180,6 +182,9 @@ function changeMoon() {
     document.getElementById("ARGONIA").style.backgroundColor = 'unset';
     document.getElementById("MOON").style.backgroundColor = 'gray';
     document.body.style.backgroundImage = "url('Moon Landscape.png')";
+    document.body.style.color = "white";
+    colorDefine = 1;
+    localStorage.setItem("colorChange",colorDefine);
 }
 
 function changeJubilee() {
@@ -191,6 +196,9 @@ function changeJubilee() {
     document.getElementById("ARGONIA").style.backgroundColor = 'unset';
     document.getElementById("JUBILEE").style.backgroundColor = 'gray';
     document.body.style.backgroundImage = "url('Jubilee Landscape.jpg')";
+    document.body.style.color = "black";
+    colorDefine = 0;
+    localStorage.setItem("colorChange",colorDefine);
 }
 
 function changeArgonia() {
@@ -202,4 +210,7 @@ function changeArgonia() {
     document.getElementById("ARGONIA").style.backgroundColor = 'unset';
     document.getElementById("ARGONIA").style.backgroundColor = 'gray';
     document.body.style.backgroundImage = "url('Argonia Landscape.jpg')";
+    document.body.style.color = "white";
+    colorDefine = 1;
+    localStorage.setItem("colorChange",colorDefine);
 }
