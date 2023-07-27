@@ -117,6 +117,7 @@ function jump(event){
         text.style.display = "none";
     }
     if (key == "e"){
+        document.getElementById("musicTrack").play();
         isGameOver = false;
         gameIsRunning = false;
         bird.reset();
@@ -218,6 +219,7 @@ function gameLoop() {
             isGameOver = true;
             endgame.style.display = "block";
             window.cancelAnimationFrame(raf);
+            document.getElementById("musicTrack").pause();
             attempts++;
             sessionStorage.setItem("attempts", attempts);
             if(score > highScore)
@@ -300,34 +302,6 @@ function initGame()
     }
 }
 
-function initGame()
-{
-    let background;
-    if(currentPlanet == "EARTH")
-    {
-        document.getElementById("canvas").style.backgroundImage = "url('earthBackdrop.jpg')";
-        gravity = 0.05;
-        windSpeed = 0;
-    }
-    else if(currentPlanet == "MOON")
-    {
-        document.getElementById("canvas").style.backgroundImage = "url('Moon Landscape.png')";
-        gravity = 0.02;
-        windSpeed = -0.5;
-    }
-    else if(currentPlanet == "ARGONIA")
-    {
-        document.getElementById("canvas").style.backgroundImage = "url('Argonia Landscape.jpg')";
-        gravity = 0.1;
-        windSpeed = -1;
-    }
-    else if(currentPlanet == "JUBILEE")
-    {
-        document.getElementById("canvas").style.backgroundImage = "url('Jubilee Landscape.jpg')";
-        gravity = 0.04;
-        windSpeed = 2;
-    }
-}
 
 let birdImage = new Image();
 birdImage.src = "icon.png";

@@ -139,10 +139,6 @@ function raiseUpElementbyID(elementID) {
     }
 }
 
-function playAudio(url) {
-    new Audio(url).play();
-  }
-
 function changePlanets(planet)
 {
     document.getElementById(currentPlanet).className = "";
@@ -155,11 +151,13 @@ function toggleSoundIcon()
     {
         document.getElementById("trackON").style.display = "inline";
         document.getElementById("trackOFF").style.display = "none";
+        document.getElementById("musicTrack").play();
     }
     else if(document.getElementById("trackON").style.display == "inline")
     {
         document.getElementById("trackON").style.display = "none";
         document.getElementById("trackOFF").style.display = "inline";
+        document.getElementById("musicTrack").pause();
     }
 }
 function changeEarth() {
