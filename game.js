@@ -21,6 +21,10 @@ let scoreElement = document.getElementById("score");
 let score = 0;
 let oxygenElement = document.getElementById("oxygenValue"); // Select the oxygen display element
 let oxygen = 100;
+
+let setColor = Number(localStorage.getItem("colorChange"));
+let colorCollection = document.getElementsByTagName("h2");
+
 const oxygenDecreaseRate = 0.07; // Adjust this value to control the oxygen decrease rate
 const oxygenReplenishAmount = 40; // Adjust this value to control how much oxygen is replenished when the bird passes through a gap
 scoreElement.textContent = score;
@@ -121,6 +125,8 @@ function jump(event){
         gameIsRunning = false;
         bird.reset();
         resetPipe();
+        attempts++;
+        sessionStorage.setItem("attempts", attempts);
         soundCount = 0;
         musicCount = 0;
         foreground.draw();
@@ -219,8 +225,6 @@ function gameLoop() {
             endgame.style.display = "block";
             window.cancelAnimationFrame(raf);
             document.getElementById("musicTrack").pause();
-            attempts++;
-            sessionStorage.setItem("attempts", attempts);
             if(score > highScore)
             {
                 highScore = score;
@@ -242,6 +246,16 @@ function birdDrop(){
     bird.dy = -3;
 }
 
+function checkColor(){
+    if (setColor == 0){
+        colorCollection[0].style.color = "black";
+        document.getElementById("oxygen").style.color = "black";
+    }
+    else if (setColor == 1){
+        colorCollection[0].style.color = "white";
+        document.getElementById("oxygen").style.color = "white";
+    }
+}
 
 function inDanger()
 {
@@ -284,24 +298,28 @@ function initGame()
         document.getElementById("canvas").style.backgroundImage = "url('earthBackdrop.jpg')";
         gravity = 0.05;
         windSpeed = 0;
+        foregroundPicture.src = "foregroundEarth.jpg";
     }
     else if(currentPlanet == "MOON")
     {
         document.getElementById("canvas").style.backgroundImage = "url('Moon Landscape.png')";
         gravity = 0.02;
         windSpeed = -0.5;
+        foregroundPicture.src = "moonForeground.png";
     }
     else if(currentPlanet == "ARGONIA")
     {
         document.getElementById("canvas").style.backgroundImage = "url('Argonia Landscape.jpg')";
         gravity = 0.1;
         windSpeed = -1;
+        foregroundPicture.src = "argoniaForeground.png";
     }
     else if(currentPlanet == "JUBILEE")
     {
         document.getElementById("canvas").style.backgroundImage = "url('Jubilee Landscape.jpg')";
         gravity = 0.04;
         windSpeed = 2;
+        foregroundPicture.src = "jubileeForeground.png";
     }
 }
 
@@ -316,7 +334,6 @@ let downPipeImage = new Image();
 downPipeImage.src = "birdPipeGoingDown.png";
 
 let foregroundPicture = new Image();
-foregroundPicture.src = "foregroundEarth.jpg";
 
 let bird = new Bird(10,300,80,80);
 bird.draw();
@@ -335,5 +352,6 @@ if(secondPipeGoingUp.x >= canvas.width)
 let foreground = new Foreground(0, 700, 2000, 100);
 foreground.draw();
 
+checkColor();
 initGame();
 gameLoop();
