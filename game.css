@@ -6,11 +6,6 @@
     margin:auto;
     width:80vw;
     height:90vh;
-<<<<<<< HEAD
-=======
-
-}
->>>>>>> 6aa4b63f73b032c362c4fc3fa7d06a7524a0bdf6
 
 }
 #canvas{
@@ -27,18 +22,12 @@ h2 {
     font-family: "classicText";
     src: url("FlappybirdyRegular-KaBW.ttf");
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> 6aa4b63f73b032c362c4fc3fa7d06a7524a0bdf6
 @font-face {
     font-family: "flappyNumbers";
     src: url("flappy-bird-font.ttf");
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> 6aa4b63f73b032c362c4fc3fa7d06a7524a0bdf6
 #text{
     text-align: center;
     margin:auto;
@@ -82,18 +71,4 @@ h2{
 
 body{
     background-color: gray;
-}
-.statSpan{
-    font-family: "flappyNumbers";
-    font-size: 50px;
-}
-
-span{    
-    font-family: flappyNumbers;
-}
-
-h2{
-    font-family: "classicText";
-    padding: 10px;
-    font-size: 200%;
 }
