@@ -21,6 +21,10 @@ let scoreElement = document.getElementById("score");
 let score = 0;
 let oxygenElement = document.getElementById("oxygenValue"); // Select the oxygen display element
 let oxygen = 100;
+
+let setColor = Number(localStorage.getItem("colorChange"));
+let colorCollection = document.getElementsByTagName("h2");
+
 const oxygenDecreaseRate = 0.07; // Adjust this value to control the oxygen decrease rate
 const oxygenReplenishAmount = 40; // Adjust this value to control how much oxygen is replenished when the bird passes through a gap
 scoreElement.textContent = score;
@@ -124,8 +128,7 @@ function jump(event){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     let key = event.key;
     if (key == "ArrowUp"){
-        if(musicCount == 0)
-        {
+        if (musicCount == 0){
             new Audio(src = "Castlevania-VampireKiller.ogg").play();
             musicCount++;
         }
@@ -140,6 +143,8 @@ function jump(event){
         gameIsRunning = false;
         bird.reset();
         resetPipe();
+        attempts++;
+        sessionStorage.setItem("attempts", attempts);
         soundCount = 0;
         musicCount = 0;
         foreground.draw();
@@ -163,9 +168,9 @@ function resetPipe(){
     secondPipeGoingDown.x = secondPipeGoingUp.x;
     secondPipeGoingDown.y = secondPipeGoingUp.y - 800 - pipeGap;
     firstOxygenBubble.x = firstPipeGoingUp.x;
-    firstOxygenBubble.y = firstPipeGoingUp.y - (Math.random() * 200 + 50);
+    firstOxygenBubble.y = firstPipeGoingUp.y - (Math.random() * 200 + 30);
     secondOxygenBubble.x = secondPipeGoingUp.x;
-    secondOxygenBubble.y = secondPipeGoingUp.y - (Math.random() * 200 + 50);
+    secondOxygenBubble.y = secondPipeGoingUp.y - (Math.random() * 200 + 30);
     if(secondPipeGoingUp.x >= canvas.width)
     {
         resetPipe();
@@ -199,6 +204,8 @@ function gameLoop() {
         if(hasOxygen)
         {
             oxygen = 100;
+            firstOxygenBubble.x = -500;
+            secondOxygenBubble.x = -500;
         }
         else(!hasOxygen)
         {
@@ -265,11 +272,25 @@ function gameLoop() {
                 soundCount++;
             }
         }
-    raf = window.requestAnimationFrame(gameLoop);
+        raf = window.requestAnimationFrame(gameLoop);
     }
+    
+
+
 
 function birdDrop(){
     bird.dy = -3;
+}
+
+function checkColor(){
+    if (setColor == 0){
+        colorCollection[0].style.color = "black";
+        document.getElementById("oxygen").style.color = "black";
+    }
+    else if (setColor == 1){
+        colorCollection[0].style.color = "white";
+        document.getElementById("oxygen").style.color = "white";
+    }
 }
 
 function inDanger()
@@ -277,7 +298,7 @@ function inDanger()
     //Check the first set of pipes
     if(bird.x > firstPipeGoingUp.x - 50 && bird.x < firstPipeGoingUp.x + 100)
     {
-        if(bird.y > firstPipeGoingUp.y - 50 || bird.y < firstPipeGoingDown.y + 770)
+        if(bird.y > firstPipeGoingUp.y - 50 || bird.y < firstPipeGoingDown.y + 760)
         {
             return true;
         }
@@ -285,7 +306,7 @@ function inDanger()
     //Check the second set of pipes
     else if(bird.x > secondPipeGoingUp.x - 50 && bird.x < secondPipeGoingUp.x + 100)
     {
-        if(bird.y > secondPipeGoingUp.y - 50 || bird.y < secondPipeGoingDown.y + 770)
+        if(bird.y > secondPipeGoingUp.y - 50 || bird.y < secondPipeGoingDown.y + 760)
         {
             return true;
         }
@@ -316,6 +337,7 @@ function initGame()
         oxygenRegen = 1;
         hasOxygen = true;
         pipeGap = 300;
+        foregroundPicture.src = "foregroundEarth.jpg";
     }
     else if(currentPlanet == "MOON")
     {
@@ -324,6 +346,7 @@ function initGame()
         windSpeed = -0.5;
         hasOxygen = false;
         pipeGap = 500;
+        foregroundPicture.src = "moonForeground.png";
     }
     else if(currentPlanet == "ARGONIA")
     {
@@ -332,6 +355,7 @@ function initGame()
         windSpeed = -1;
         hasOxygen = false;
         pipeGap = 200;
+        foregroundPicture.src = "argoniaForeground.png";
     }
 
     else if(currentPlanet == "JUBILEE")
@@ -341,8 +365,11 @@ function initGame()
         windSpeed = 2;
         hasOxygen = true;
         pipeGap = 400;
+        foregroundPicture.src = "jubileeForeground.png";
     }
 }
+
+let foregroundPicture = new Image();
 
 initGame();
 
@@ -354,9 +381,6 @@ pipeImage.src = "birdPipe.png";
 
 let downPipeImage = new Image();
 downPipeImage.src = "birdPipeGoingDown.png";
-
-let foregroundPicture = new Image();
-foregroundPicture.src = "foregroundEarth.jpg";
 
 let oxyBubble = new Image();
 oxyBubble.src = "Oxy Bubble.gif";
@@ -378,6 +402,8 @@ if(hasOxygen)
     firstOxygenBubble.y = -100;
     secondOxygenBubble.x = -100;
     secondOxygenBubble.y = -100;
+    firstOxygenBubble.draw();
+    secondOxygenBubble.draw();
 }
 if(secondPipeGoingUp.x >= canvas.width)
 {
@@ -387,4 +413,5 @@ if(secondPipeGoingUp.x >= canvas.width)
 let foreground = new Foreground(0, 930, 2000, 100);
 foreground.draw();
 
+checkColor();
 gameLoop();

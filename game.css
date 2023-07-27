@@ -8,12 +8,12 @@
     height:90vh;
 
 }
-
 #canvas{
     background-image: url("earthBackdrop.jpg");
     background-size: contain;
     padding: 0;
     overflow: hidden;
+    background-repeat: no-repeat;
 }
 h2 {
     position: absolute;
@@ -24,10 +24,12 @@ h2 {
     font-family: "classicText";
     src: url("FlappybirdyRegular-KaBW.ttf");
 }
+
 @font-face {
     font-family: "flappyNumbers";
     src: url("flappy-bird-font.ttf");
 }
+
 #text{
     text-align: center;
     margin:auto;
@@ -54,9 +56,6 @@ h2 {
     background-color: skyblue;
 }
 
-body{
-    background-color: gray;
-}
 .statSpan{
     font-family: "flappyNumbers";
     font-size: 50px;
@@ -71,6 +70,11 @@ h2{
     padding: 10px;
     font-size: 200%;
 }
+
+body{
+    background-color: gray;
+}
+
 #oxygen {
     position: absolute;
     top: 100px;
